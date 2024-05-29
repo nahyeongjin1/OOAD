@@ -10,8 +10,7 @@ public class MultiThreadedServer {
     public static void main(String[] args) {
         try {
             ServerSocket serverSocket = new ServerSocket(12345);
-            System.out.println("서버가 시작되었습니다. 클라이언트 연결 대기 중...");
-
+            System.out.println("connect.");
 
             // 서버 메시지 스레드 생성 및 실행
             ServerMessageThread serverMessageThread = new ServerMessageThread();
@@ -19,7 +18,7 @@ public class MultiThreadedServer {
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("클라이언트가 연결되었습니다.");
+                System.out.println("hi client.");
 
                 // 클라이언트와 통신할 스레드 생성
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
@@ -49,7 +48,7 @@ public class MultiThreadedServer {
 
                 String message;
                 while ((message = in.readLine()) != null) {
-                    System.out.println("클라이언트로부터 받은 메시지: " + message);
+                    System.out.println("client msg: " + message);
                     // broadcast(message);
                 }
             } catch (IOException e) {
@@ -66,12 +65,12 @@ public class MultiThreadedServer {
         }
 
         private void sendMessage(String message) {
-            out.println("서버에서 응답: " + message);
+            out.println("server res: " + message);
         }
 
         // 특정 클라이언트에게 메시지 전송
         public void sendToClient(String clientMessage) {
-            out.println("서버에서 특정 클라이언트로 보낸 메시지: " + clientMessage);
+            out.println("server >> " + clientMessage);
         }
     }
 
@@ -80,16 +79,16 @@ public class MultiThreadedServer {
         public void run() {
             Scanner scanner = new Scanner(System.in);
             while (true) {
-                System.out.print("서버에서 클라이언트로 보낼 메시지: ");
+                System.out.print("server >> ");
                 String inputMessage = scanner.nextLine();
-                System.out.print("특정 클라이언트 번호를 입력하세요 (0부터 시작): ");
+                System.out.print("input client Num : ");
                 int clientNumber = scanner.nextInt();
                 scanner.nextLine(); // 개행 문자 처리
 
                 if (clientNumber >= 0 && clientNumber < clients.size()) {
                     clients.get(clientNumber).sendToClient(inputMessage);
                 } else {
-                    System.out.println("유효하지 않은 클라이언트 번호입니다.");
+                    System.out.println("unvalid client number.");
                 }
             }
         }
