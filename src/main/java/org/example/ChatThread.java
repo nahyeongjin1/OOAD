@@ -35,12 +35,8 @@ public class ChatThread extends Thread{
     }
     @Override
     public void run() {
-        // 사용자가 보낸 메시지를 읽어들여서 접속된 모든 클라이언트에게 메시지를 보낸다.
-        // broadcast
-        // 나를 제외한 모든 사용자에게 00님이 연결되었습니다.
-        // 현재의 chatThread를 제외하고 보낸다.
         try {
-            broadcast(name + " : " + "입장", false);
+            broadcast(name + " : " + "connect", false);
 
             String line = null;
 
@@ -48,10 +44,10 @@ public class ChatThread extends Thread{
                 if ("/quit".equals(line)) {
                     break;
                 }
-                // 나를 포함한 chatThraed에게 메시지를 보낸다.
+
                 broadcast(name + ":" + line, true);
             }
-        } catch (Exception ex) { // chatThread 연결이 끊김
+        } catch (Exception ex) {
         }finally {
             broadcast(name + " : " + "closed ", false);
             this.list.remove(this);
@@ -80,7 +76,7 @@ public class ChatThread extends Thread{
         try {
             for (int i = 0; i < chatThreads.size(); i++) {
                 ChatThread ct = chatThreads.get(i);
-                if (!incluedMe) { // 나를 포함하지 않는다.
+                if (!incluedMe) {
                     if (ct == this) {
                         continue;
                     }
