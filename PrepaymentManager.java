@@ -26,7 +26,7 @@ public class PrepaymentManager {
         msg_req_stock_msg_content.put("item_num", item_num);
 
         msg_req_stock.put("msg_type", "req_stock");
-        msg_req_stock.put("src_id", "Team8");
+        msg_req_stock.put("src_id", "Team1");
         msg_req_stock.put("dst_id", "0");
         msg_req_stock.put("msg_content", msg_req_stock_msg_content);
 
@@ -65,11 +65,11 @@ public class PrepaymentManager {
         msg_req_prepayment_msg_content.put("cert_code", cert_code);
 
         msg_req_prepayment.put("msg_type", "req_prepay");
-        msg_req_prepayment.put("src_id", "Team8");
+        msg_req_prepayment.put("src_id", "Team1");
         msg_req_prepayment.put("dst_id", id);
         msg_req_prepayment.put("msg_content", msg_req_prepayment_msg_content);
 
-        network.clientStart(id.charAt(4)-1, msg_req_prepayment);
+        network.clientStart(Character.getNumericValue(id.charAt(4))-1, msg_req_prepayment);
     }
 
     //(client)
