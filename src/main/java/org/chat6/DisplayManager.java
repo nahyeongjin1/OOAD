@@ -303,7 +303,6 @@ public class DisplayManager extends JFrame {
         inputItemCode.getDocument().addDocumentListener(documentListener);
         inputItemNum.getDocument().addDocumentListener(documentListener);
 
-
     }
 
     public void askPrepayment(int inputItemCode, int inputItemNum) {
@@ -325,7 +324,7 @@ public class DisplayManager extends JFrame {
         smbtn.addActionListener(e -> {
             currentPanel.setVisible(false);
             prepaymentManager.askStockRequest(inputItemCode, inputItemNum);
-            // payment check
+            //prePaymentUI();
 
         });
     }

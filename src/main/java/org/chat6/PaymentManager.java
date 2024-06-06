@@ -18,5 +18,5 @@ public class PaymentManager {
     public void startPayment(int itemCode, int itemNum) {
         int totalPrice = itemCode * itemNum;
         cardCompany.requestPayment(cardNumber, totalPrice);
-
+    }
 }

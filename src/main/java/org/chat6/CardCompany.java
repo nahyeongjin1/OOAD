@@ -49,7 +49,8 @@ public class CardCompany {
 
         for(Map<String,Object> element : cards) {
             if (element.get("CardNumber").equals(cardNumber)) {
-                balance = (Integer)element.get("Balance");
+                balance = Integer.parseInt(String.valueOf(element.get("Balance")));
+                System.out.println("total : " + totalPrice);
                 if (balance >= totalPrice) {
                     balance -= totalPrice;
                     element.put("Balance", balance);
