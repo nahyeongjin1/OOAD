@@ -321,9 +321,36 @@ public class DisplayManager extends JFrame {
         smbtn.addActionListener(e -> {
             currentPanel.setVisible(false);
             prepaymentManager.askStockRequest(inputItemCode, inputItemNum);
+            // payment check
+
         });
     }
 
+    void prePaymentUI(String distance) {
+        getContentPane().removeAll();
+        currentPanel = new JPanel();
+        JButton homeBtn = new JButton("Home");
+        JLabel label = new JLabel("“Would you like to make a payment for the DVM located at a distance of" + distance + "? ");
+        JButton paymentBtn = new JButton("payment yes!!");
 
+        currentPanel.add(homeBtn);
+        currentPanel.add(label);
+        currentPanel.add(paymentBtn);
+
+        add(currentPanel);
+
+        homeBtn.addActionListener(e -> {
+            currentPanel.setVisible(false);
+            printMainScene();
+        });
+        paymentBtn.addActionListener(e -> {
+            currentPanel.setVisible(false);
+            // 결제함수.
+        });
+    }
+
+    void failPayment(String distance) {
+        printMsgAndMainScene("payment fail");
+    }
 }
 
