@@ -65,9 +65,9 @@ public class CardCompany {
 
 
     int requestValidCard(String card){
-        for(Map<String,Object> element : cards){
+        for(Map<String, Object> element : cards){
             if(element.get("CardNumber").equals(card)) {
-                return (int)element.get("Balance");
+                return Integer.parseInt("" + element.get("Balance"));
             }
         }
         return -1;
