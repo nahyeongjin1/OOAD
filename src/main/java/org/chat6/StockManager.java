@@ -6,13 +6,30 @@ public class StockManager {
     private int[] stockList;
     private int[][] selectedStock;
     private int[] validStocks = {3,7,12,15,16};
+    PaymentManager paymentManager;
+  
     public StockManager() {
         stockList = new int[20];
         selectedStock = new int[10][20];
         for (int i = 0; selectedStock.length > i; i++) {
-            Arrays.fill(selectedStock[i], 99);
+          Arrays.fill(selectedStock[i], 99);
         }
+    }
 
+
+    public void init(PaymentManager paymentManager) {
+        this.paymentManager = paymentManager;
+    }
+
+    public boolean checkStockAndPayment(int itemCode, int itemNum) {
+
+        if (itemNum <= stockList[itemCode]) {
+            reduceStock(itemCode, itemNum);
+            // temp
+            paymentManager.startPayment("12345678", 1000);
+            return true;
+        }
+      return false;
     }
 
     public boolean checkStock(int itemCode, int itemNum) {
@@ -47,9 +64,16 @@ public class StockManager {
             System.out.println("selectStock");
             selectedStock[0][itemCode] += itemNum;
             stockList[itemCode] -= itemNum;
+
             return true;
         }
         return false;
+    }
+
+
+    public void reduceStock(int itemCode, int itemNum) {
+
+        stockList[itemCode] -= itemNum;
     }
 
     public void printStockList() {
@@ -64,3 +88,4 @@ public class StockManager {
 
 
 }
+
