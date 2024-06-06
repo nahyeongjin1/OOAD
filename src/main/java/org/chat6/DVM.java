@@ -1,5 +1,8 @@
 package org.chat6;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DVM {
     private String dvm_id;
     private int x;
@@ -18,5 +21,12 @@ public class DVM {
 
     public String getDvm_id() {
         return dvm_id;
+    }
+
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
     }
 }

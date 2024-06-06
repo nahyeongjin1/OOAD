@@ -21,6 +21,8 @@ public class DisplayManager extends JFrame {
     PrepaymentManager prepaymentManager;
     PaymentManager paymentManager;
     VMController vmController;
+    private Integer userInputItemCode;
+    private Integer userInputItemNum;
 
     DisplayManager(AuthenticationCode authenticationCode, CardCompany cardCompany, StockManager stockManager, AdminManager adminManager, VMController vmController, PrepaymentManager prepaymentManager, PaymentManager paymentManager) {
         this.vmController = vmController;
@@ -45,6 +47,8 @@ public class DisplayManager extends JFrame {
         JButton codeBtn = new JButton("Authentication Code");
         JButton cardBtn = new JButton("Card");
         JButton adminBtn = new JButton("Admin");
+        userInputItemCode = -1;
+        userInputItemNum = -1;
 
         currentPanel.add(codeBtn);
         currentPanel.add(adminBtn);
@@ -231,6 +235,7 @@ public class DisplayManager extends JFrame {
         JButton submitBtn = new JButton("Purchase");
         Border border = BorderFactory.createLineBorder(Color.BLACK);
 
+
         itemPanel.setLayout(gl);
         errorMsg.setVisible(false);
         currentPanel.add(itemPanel);
@@ -250,21 +255,25 @@ public class DisplayManager extends JFrame {
             itemPanel.add(field);
         }
 
+
         homeBtn.addActionListener(e -> {
             currentPanel.setVisible(false);
             printMainScene();
         });
         submitBtn.addActionListener(e -> {
-            boolean result = stockManager.selectStock(Integer.parseInt(inputItemCode.getText()), Integer.parseInt(inputItemNum.getText()));
+            userInputItemCode = Integer.parseInt(inputItemCode.getText());
+            userInputItemNum = Integer.parseInt(inputItemNum.getText());
+
+            boolean result = stockManager.selectStock(userInputItemCode, userInputItemNum);
             if (result) {
                 currentPanel.setVisible(false);
                 stockManager.printStockList();
-                paymentManager.startPayment(Integer.parseInt(inputItemCode.getText()), Integer.parseInt(inputItemNum.getText()));
+                paymentManager.startPayment(items.get(userInputItemCode-1).price, userInputItemNum);
                 printMsgAndMainScene("good deal");
             } else {
-                prepaymentManager.askStockRequest(Integer.parseInt(inputItemCode.getText()), Integer.parseInt(inputItemNum.getText()));
+                prepaymentManager.askStockRequest(userInputItemCode, userInputItemNum);
                 currentPanel.setVisible(false);
-                askPrepayment(Integer.parseInt(inputItemCode.getText()), Integer.parseInt(inputItemNum.getText()));
+                prePaymentUI();
                 //printMsgAndMainScene("fail");
             }
 
@@ -286,8 +295,8 @@ public class DisplayManager extends JFrame {
 
             private void calculate() {
                 try {
-                    int itemCode = Integer.parseInt(inputItemCode.getText());
-                    int itemNum = Integer.parseInt(inputItemNum.getText());
+                    int itemCode = userInputItemCode;
+                    int itemNum = userInputItemNum;
                     int total = items.get(itemCode - 1).price * itemNum;
                     totalPrice.setText("total : "+total);
                     errorMsg.setVisible(false);
@@ -306,7 +315,7 @@ public class DisplayManager extends JFrame {
 
     }
 
-    public void askPrepayment(int inputItemCode, int inputItemNum) {
+    public void askPrepayment() {
         getContentPane().removeAll();
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
@@ -322,15 +331,16 @@ public class DisplayManager extends JFrame {
         });
         smbtn.addActionListener(e -> {
             currentPanel.setVisible(false);
-            prepaymentManager.sendAskPrepaymentMsg(inputItemCode, inputItemNum, authenticationCode.generateRandomString());
+            prepaymentManager.sendAskPrepaymentMsg(userInputItemCode, userInputItemNum, authenticationCode.generateRandomString());
         });
     }
 
-    void prePaymentUI(String distance) {
+    void prePaymentUI() {
         getContentPane().removeAll();
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
-        JLabel label = new JLabel("“Would you like to make a payment for the DVM located at a distance of" + distance + "? ");
+        String targetDVM_coordinate = prepaymentManager.nearestDVMcoordinate();
+        JLabel label = new JLabel("“Would you like to make a payment for the DVM located at a distance of" + targetDVM_coordinate + "? ");
         JButton paymentBtn = new JButton("payment yes!!");
 
         currentPanel.add(homeBtn);
@@ -345,11 +355,12 @@ public class DisplayManager extends JFrame {
         });
         paymentBtn.addActionListener(e -> {
             currentPanel.setVisible(false);
+            prepaymentManager.sendAskPrepaymentMsg(userInputItemCode, userInputItemNum, authenticationCode.generateRandomString());
             // 결제함수.
         });
     }
 
-    void failPayment(String distance) {
+    void failPayment() {
         printMsgAndMainScene("payment fail");
     }
 }
