@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.*;
 
 public class CardCompany {
-    List<Map<String,Object>> cards = new ArrayList<>();
+    Map<String,Integer> cards = new HashMap<>();  //CardNumber, Balance
     DisplayManager displayManager;
 
     public CardCompany(){
@@ -25,11 +25,7 @@ public class CardCompany {
                 tmp=line.indexOf(" ");
                 arr[1] = line.substring(tmp+1);
 
-                Map<String,Object> map = new HashMap<>();
-                map.put("CardNumber",arr[0]);
-                map.put("Balance",arr[1]);
-
-                cards.add(map);
+                cards.put(arr[0], Integer.parseInt(arr[1]));  //CardNumber, Balance
             }
             br.close();
         } catch (IOException e) {
@@ -47,22 +43,23 @@ public class CardCompany {
         int balance;
         boolean isSuccess = false;
 
-        for(Map<String,Object> element : cards) {
-            if (element.get("CardNumber").equals(cardNumber)) {
-                balance = (Integer)element.get("Balance");
+        for(Map.Entry<String,Integer> element : cards.entrySet()) {
+            if (element.getKey().equals(cardNumber)) {
+                balance = element.getValue();
                 if (balance >= totalPrice) {
                     balance -= totalPrice;
-                    element.put("Balance", balance);
+                    element.setValue(balance);
                     try {
                         String filePath = "src/main/java/org/chat6/Card.txt";
 
                         FileWriter fileWriter = new FileWriter(filePath);
                         BufferedWriter bw = new BufferedWriter(fileWriter);
 
-                        for(Map<String,Object> el : cards){
-                            String text = el.get("CardNumber")+" "+el.get("Balance")+"\n";
+                        for(Map.Entry<String,Integer> el : cards.entrySet()){
+                            String text = el.getKey()+" "+el.getValue()+"\n";
                             bw.write(text);
                         }
+
                         bw.close();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -80,11 +77,9 @@ public class CardCompany {
 
 
     int requestValidCard(String card){
-        for(Map<String, Object> element : cards){
-            if(element.get("CardNumber").equals(card)) {
-                return Integer.parseInt("" + element.get("Balance"));
-            }
-        }
-        return -1;
+        if(cards.containsKey(card))
+            return 1;
+        else
+            return -1;
     }
 }
