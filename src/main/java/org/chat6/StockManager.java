@@ -24,13 +24,13 @@ public class StockManager {
         this.vmController = vmController;
     }
 
-    public boolean checkStockAndPayment(int itemCode, int itemNum) {
+    public boolean checkStockAndPayment(int itemCode, int itemNum, int itemPrice) {
 
         if (itemNum <= stockList[itemCode]) {
             reduceStock(itemCode, itemNum);
             // temp
 
-            paymentManager.startPayment(itemCode, itemNum);
+            paymentManager.startPayment(itemPrice, itemNum);
             return true;
 
         }

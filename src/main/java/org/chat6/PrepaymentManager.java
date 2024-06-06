@@ -10,15 +10,18 @@ public class PrepaymentManager {
     private List<DVM> dvmList = new ArrayList<>();
     private Network network;
     private StockManager stockManager;
+    private DisplayManager displayManager;
     private AuthenticationCode authenticationCode;
+    private String sendingCode;
 
     public PrepaymentManager(StockManager stockManager, AuthenticationCode authenticationCode){
         this.stockManager = stockManager;
         this.authenticationCode = authenticationCode;
     }
 
-    public void setNetwork(Network network) {
+    public void init(Network network, DisplayManager displayManager) {
         this.network = network;
+        this.displayManager = displayManager;
     }
 
     //(broadcast)(client)
@@ -77,7 +80,7 @@ public class PrepaymentManager {
 
         JSONObject msg_req_prepayment_msg_content = new JSONObject();
 
-        sortDvmList();
+        sendingCode = cert_code;
 
         String target_id = dvmList.get(0).getDvm_id();
         dvmList.remove(0);
@@ -97,24 +100,29 @@ public class PrepaymentManager {
     //(client)
     public void respPerpayment(JSONObject msg_res_prepayment) {
         JSONObject msg_res_prepayment_msg_content = (JSONObject) msg_res_prepayment.get("msg_content");
-        String certCode = authenticationCode.generateRandomString();
 
         if(msg_res_prepayment_msg_content.get("availability").toString().equals("T")) {
             System.out.println("can Prepayment");
+
+            int targetX = 0;
+            int targetY = 0;
+            for(DVM dvm : dvmList) {
+                if(dvm.getDvm_id().equals(msg_res_prepayment.get("dst_id").toString())) {
+                    targetX = dvm.getX();
+                    targetY = dvm.getY();
+                }
+            }
             dvmList.clear();
+            displayManager.printMsgAndMainScene("Prepayment Success\n" + "authentication code : " + sendingCode + "\n" + "Coordinate : (" + targetX + ", " + targetY + ")");
+
         } else {
             System.out.println("can't prepay");
             if(dvmList.isEmpty()) {
                 System.out.println("no dvm");
-
-                //call no available dvm -> display
+                displayManager.failPayment();
                 return;
             }
-            sendAskPrepaymentMsg(
-                    Integer.parseInt(msg_res_prepayment_msg_content.get("item_code").toString()),
-                    Integer.parseInt(msg_res_prepayment_msg_content.get("item_num").toString()),
-                    certCode
-            );
+            displayManager.prePaymentUI();
         }
     }
 
@@ -138,5 +146,10 @@ public class PrepaymentManager {
         } else {
             return false;
         }
+    }
+
+    public String nearestDVMcoordinate() {
+        sortDvmList();
+        return "(x : " + dvmList.get(0).getX() + ", y : " + dvmList.get(0).getY() + ")";
     }
 }

@@ -42,10 +42,7 @@ public class Network extends Thread {
         otherDVM_IP_Port.put(otherDVMList[8], 8);
 
         int i=0;
-        for(String key : otherDVM_IP_Port.keySet()) {
-            otherDVMList[i++] = key;
-            System.out.println(i + ": " + otherDVMList[i-1] + " " + otherDVM_IP_Port.get(key));
-        }
+
     }
 
     private static List<Network.ClientHandler> clients = new ArrayList<>();
