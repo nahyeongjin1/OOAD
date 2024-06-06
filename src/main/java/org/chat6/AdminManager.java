@@ -3,6 +3,8 @@ package chat6;
 public class AdminManager {
     int id;
     int pw;
+
+
     StockManager stockManager;
     AdminManager(int id, int pw, StockManager stockManager) {
         this.id = id;

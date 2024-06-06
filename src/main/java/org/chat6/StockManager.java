@@ -5,17 +5,14 @@ import java.util.*;
 public class StockManager {
     private int[] stockList;
     private int[][] selectedStock;
+    private int[] validStocks = {3,7,12,15,16};
     public StockManager() {
         stockList = new int[20];
         selectedStock = new int[10][20];
         for (int i = 0; selectedStock.length > i; i++) {
-            Arrays.fill(selectedStock[i], 0);
+            Arrays.fill(selectedStock[i], 99);
         }
-        stockList[0] = 99;
-        stockList[1] = 99;
-        stockList[2] = 99;
-        stockList[3] = 99;
-        stockList[4] = 99;
+
     }
 
     public boolean checkStock(int itemCode, int itemNum) {
@@ -28,8 +25,21 @@ public class StockManager {
         }
     }
 
+    private boolean isValidStock(int itemCode) {
+        for (int i = 0; i < validStocks.length; i++) {
+            if (itemCode == validStocks[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void rechargeStock() {
-        Arrays.fill(stockList, 99);
+        for (int i = 0; i < stockList.length; i++) {
+            if (isValidStock(i)) {
+                stockList[i] = 99;
+            }
+        }
     }
 
     public boolean selectStock(int itemCode, int itemNum) {
