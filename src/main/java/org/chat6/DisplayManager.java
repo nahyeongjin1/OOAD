@@ -137,7 +137,7 @@ public class DisplayManager extends JFrame {
                 System.out.println(result);
                 if (result) {
                     currentPanel.setVisible(false);
-                    completePurchase();
+                    printMsgAndMainScene("good deal");
                 } else {
                     showErrorMessage(errorlabel);
                 }
@@ -178,11 +178,11 @@ public class DisplayManager extends JFrame {
         });
     }
 
-    void completePurchase() {
+    void printMsgAndMainScene(String msg) {
         getContentPane().removeAll();
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
-        JLabel label = new JLabel("good deal.");
+        JLabel label = new JLabel(msg);
 
 
         currentPanel.add(homeBtn);
@@ -196,8 +196,6 @@ public class DisplayManager extends JFrame {
                 printMainScene();
             }
         });
-
-
     }
 
     void showErrorMessage(JLabel j) {
@@ -209,14 +207,11 @@ public class DisplayManager extends JFrame {
         stockManager.printStockList();
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
-        JLabel errorMsg = new JLabel("fail.");
         JTextField inputItemCode = new JTextField(10);
         JTextField inputItemNum = new JTextField(10);
         JLabel totalPrice = new JLabel("");
         JButton submitBtn = new JButton("Purchase");
 
-        errorMsg.setVisible(false);
-        currentPanel.add(errorMsg);
         currentPanel.add(homeBtn);
         currentPanel.add(inputItemCode);
         currentPanel.add(inputItemNum);
@@ -239,9 +234,10 @@ public class DisplayManager extends JFrame {
                 if (result) {
                     currentPanel.setVisible(false);
                     stockManager.printStockList();
-                    completePurchase();
+                    printMsgAndMainScene("good deal");
                 } else {
-                    showErrorMessage(errorMsg);
+                    currentPanel.setVisible(false);
+                    printMsgAndMainScene("fail");
                 }
 
             }

@@ -43,7 +43,8 @@ public class StockManager {
     }
 
     public boolean selectStock(int itemCode, int itemNum) {
-        if (itemNum >= 1 && stockList[itemCode] >= itemNum) {
+        if (itemCode <= 20 && itemCode >= 1 && itemNum >= 1 && stockList[itemCode] >= itemNum) {
+            System.out.println("selectStock");
             selectedStock[0][itemCode] += itemNum;
             stockList[itemCode] -= itemNum;
             return true;
@@ -52,9 +53,12 @@ public class StockManager {
     }
 
     public void printStockList() {
+        System.out.println("------------------------------");
         for (int i = 0; i < stockList.length; i++) {
             System.out.println("item code[" + i + "] : " + stockList[i]);
         }
+        System.out.println("------------------------------");
+
     }
 
 

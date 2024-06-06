@@ -13,7 +13,6 @@ public class Client {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
-            // 서버 응답을 받는 스레드 생성 및 실행
             ServerResponseThread responseThread = new ServerResponseThread(in);
             responseThread.start();
 

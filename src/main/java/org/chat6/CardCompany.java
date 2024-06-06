@@ -13,7 +13,7 @@ public class CardCompany {
     CardCompany(){
 
         try {
-            String filePath = "src/chat6/Card.txt";
+            String filePath = "src/main/java/org/chat6/Card.txt";
             FileReader fileReader = new FileReader(filePath);
             BufferedReader br = new BufferedReader(fileReader);
             String line;
