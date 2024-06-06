@@ -26,3 +26,11 @@ tasks.withType<Jar> {
         attributes["Main-Class"] = "org.chat6.Main"
     }
 }
+
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+}
+
+tasks.withType<Javadoc>{
+    options.encoding = "UTF-8"
+}

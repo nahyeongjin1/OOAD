@@ -19,15 +19,17 @@ public class DisplayManager extends JFrame {
     StockManager stockManager;
     AdminManager adminManager;
     PrepaymentManager prepaymentManager;
+    PaymentManager paymentManager;
     VMController vmController;
 
-    DisplayManager(AuthenticationCode authenticationCode, CardCompany cardCompany, StockManager stockManager, AdminManager adminManager, VMController vmController, PrepaymentManager prepaymentManager) {
+    DisplayManager(AuthenticationCode authenticationCode, CardCompany cardCompany, StockManager stockManager, AdminManager adminManager, VMController vmController, PrepaymentManager prepaymentManager, PaymentManager paymentManager) {
         this.vmController = vmController;
         this.authenticationCode = authenticationCode;
         this.cardCompany = cardCompany;
         this.stockManager = stockManager;
         this.adminManager = adminManager;
         this.prepaymentManager = prepaymentManager;
+        this.paymentManager = paymentManager;
         setVisible(true);
         setSize(640, 480);
         setResizable(false);
@@ -93,9 +95,8 @@ public class DisplayManager extends JFrame {
             if (result==-1) {
                 showErrorMessage(errorlabel);
             } else {
-                Map<String, Integer> cardInfo = new HashMap<>();
-                cardInfo.put(input.getText(),result);
-                vmController.setCardInfo(cardInfo);
+                String cardNumber = input.getText();
+                paymentManager.setCardNumber(cardNumber);
                 currentPanel.setVisible(false);
                 showItems();
             }
@@ -258,6 +259,7 @@ public class DisplayManager extends JFrame {
             if (result) {
                 currentPanel.setVisible(false);
                 stockManager.printStockList();
+                paymentManager.startPayment(Integer.parseInt(inputItemCode.getText()), Integer.parseInt(inputItemNum.getText()));
                 printMsgAndMainScene("good deal");
             } else {
                 prepaymentManager.askStockRequest(Integer.parseInt(inputItemCode.getText()), Integer.parseInt(inputItemNum.getText()));
