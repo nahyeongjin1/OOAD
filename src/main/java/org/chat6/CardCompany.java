@@ -59,7 +59,7 @@ public class CardCompany {
         }
         return isSuccess;
     }
-}
+
 
     boolean requestValidCard(String card){
         for(Map<String,Object> element : cards){
