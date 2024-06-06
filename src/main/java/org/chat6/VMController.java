@@ -9,6 +9,7 @@ public class VMController {
     private int y;
 
     private Map<Integer, Integer> item_list = new HashMap<>();
+    private Map<String, Integer> card;
 
     VMController(String dvm_id, int x, int y) {
         this.dvm_id = dvm_id;
