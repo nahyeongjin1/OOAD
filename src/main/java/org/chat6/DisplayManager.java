@@ -17,14 +17,16 @@ public class DisplayManager extends JFrame {
     CardCompany cardCompany;
     StockManager stockManager;
     AdminManager adminManager;
+    PrepaymentManager prepaymentManager;
     VMController vmController;
 
-    DisplayManager(AuthenticationCode authenticationCode, CardCompany cardCompany, StockManager stockManager, AdminManager adminManager, VMController vmController) {
+    DisplayManager(AuthenticationCode authenticationCode, CardCompany cardCompany, StockManager stockManager, AdminManager adminManager, VMController vmController, PrepaymentManager prepaymentManager) {
         this.vmController = vmController;
         this.authenticationCode = authenticationCode;
         this.cardCompany = cardCompany;
         this.stockManager = stockManager;
         this.adminManager = adminManager;
+        this.prepaymentManager = prepaymentManager;
         setVisible(true);
         setSize(640, 480);
         setResizable(false);
@@ -257,6 +259,7 @@ public class DisplayManager extends JFrame {
                 stockManager.printStockList();
                 printMsgAndMainScene("good deal");
             } else {
+                prepaymentManager.askStockRequest(Integer.parseInt(inputItemCode.getText()), Integer.parseInt(inputItemNum.getText()));
                 currentPanel.setVisible(false);
                 printMsgAndMainScene("fail");
             }

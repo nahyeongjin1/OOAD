@@ -22,10 +22,12 @@ public class VMController {
         CardCompany cardCompany = new CardCompany();
         StockManager stockManager = new StockManager();
         AdminManager adminManager = new AdminManager(10, 5, stockManager);
-        DisplayManager displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager, this);
         PrepaymentManager prepaymentManager = new PrepaymentManager(stockManager, authenticationCode);
         Network network = new Network(prepaymentManager);
         prepaymentManager.setNetwork(network);
+        DisplayManager displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager, this, prepaymentManager);
+
+        network.start();
     }
 
     public int getX() {
