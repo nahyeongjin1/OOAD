@@ -31,6 +31,7 @@ public class CardCompany {
 
                 cards.add(map);
             }
+            br.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -52,6 +53,20 @@ public class CardCompany {
                 if (balance >= totalPrice) {
                     balance -= totalPrice;
                     element.put("Balance", balance);
+                    try {
+                        String filePath = "src/main/java/org/chat6/Card.txt";
+
+                        FileWriter fileWriter = new FileWriter(filePath);
+                        BufferedWriter bw = new BufferedWriter(fileWriter);
+
+                        for(Map<String,Object> el : cards){
+                            String text = el.get("CardNumber")+" "+el.get("Balance")+"\n";
+                            bw.write(text);
+                        }
+                        bw.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     isSuccess = true;
                     displayManager.displayPaymentSuccess();
                     return isSuccess;
@@ -65,9 +80,9 @@ public class CardCompany {
 
 
     int requestValidCard(String card){
-        for(Map<String,Object> element : cards){
+        for(Map<String, Object> element : cards){
             if(element.get("CardNumber").equals(card)) {
-                return (int)element.get("Balance");
+                return Integer.parseInt("" + element.get("Balance"));
             }
         }
         return -1;

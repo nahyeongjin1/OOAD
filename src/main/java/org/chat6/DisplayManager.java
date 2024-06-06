@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.prefs.Preferences;
 
 public class DisplayManager extends JFrame {
     JPanel currentPanel;
@@ -78,27 +79,6 @@ public class DisplayManager extends JFrame {
 
         errorlabel.setVisible(false);
 
-        JFrame frame = new JFrame("5x4");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
-
-        String[][] data = {
-                {"1", "2", "3", "4"},
-                {"5", "6", "7", "8"},
-                {"9", "10", "11", "12"},
-                {"13", "14", "15", "16"},
-                {"17", "18", "19", "20"}
-        };
-
-        String[] columnNames = {"1", "2", "3", "4"};
-        JTable table = new JTable(data, columnNames);
-
-        JScrollPane scrollPane = new JScrollPane(table);
-        frame.add(scrollPane, BorderLayout.CENTER);
-
-        frame.setVisible(true);
-
-
         currentPanel.add(homeBtn, BorderLayout.PAGE_START);
         currentPanel.add(label, BorderLayout.WEST);
         currentPanel.add(input, BorderLayout.CENTER);
@@ -110,7 +90,7 @@ public class DisplayManager extends JFrame {
             printMainScene();
         });
         submitBtn.addActionListener(e -> {
-            int result = cardCompany.requestValidCard(input.getText()); // 유효하면 잔액 반환, 유효하지 않으면-1반환
+            int result = cardCompany.requestValidCard(input.getText());
             System.out.println(result);
             if (result==-1) {
                 showErrorMessage(errorlabel);
@@ -208,10 +188,10 @@ public class DisplayManager extends JFrame {
     } 
 
     public void displayPaymentSuccess() {
-
+        printMsgAndMainScene("payment success");
     }
     public void displayInsufficientBalance() {
-
+        printMsgAndMainScene("insufficient balance");
     }
 
     void showItems() {
@@ -284,7 +264,8 @@ public class DisplayManager extends JFrame {
             } else {
                 prepaymentManager.askStockRequest(Integer.parseInt(inputItemCode.getText()), Integer.parseInt(inputItemNum.getText()));
                 currentPanel.setVisible(false);
-                printMsgAndMainScene("fail");
+                askPrepayment(Integer.parseInt(inputItemCode.getText()), Integer.parseInt(inputItemNum.getText()));
+                //printMsgAndMainScene("fail");
             }
 
         });
@@ -324,6 +305,27 @@ public class DisplayManager extends JFrame {
 
 
     }
+
+    public void askPrepayment(int inputItemCode, int inputItemNum) {
+        getContentPane().removeAll();
+        currentPanel = new JPanel();
+        JButton homeBtn = new JButton("Home");
+        JButton smbtn = new JButton("prepayment?");
+
+        currentPanel.add(homeBtn);
+        currentPanel.add(smbtn);
+        add(currentPanel);
+
+        homeBtn.addActionListener(e -> {
+            currentPanel.setVisible(false);
+            printMainScene();
+        });
+        smbtn.addActionListener(e -> {
+            currentPanel.setVisible(false);
+            prepaymentManager.askStockRequest(inputItemCode, inputItemNum);
+        });
+    }
+
 
 }
 
