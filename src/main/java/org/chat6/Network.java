@@ -1,4 +1,4 @@
-package chat6;
+package org.chat6;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

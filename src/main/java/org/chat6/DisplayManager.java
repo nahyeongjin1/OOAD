@@ -1,4 +1,4 @@
-package chat6;
+package org.chat6;
 
 import javax.swing.*;
 import java.awt.*;
