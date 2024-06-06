@@ -26,7 +26,7 @@ public class StockManager {
         if (itemNum <= stockList[itemCode]) {
             reduceStock(itemCode, itemNum);
             // temp
-            paymentManager.startPayment("12345678", 1000);
+            paymentManager.startPayment(itemCode, itemNum);
             return true;
         }
       return false;
