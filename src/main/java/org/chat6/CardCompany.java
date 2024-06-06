@@ -1,14 +1,14 @@
-package org.example;
+package org.chat6;
 
 
 import java.io.*;
 import java.util.*;
 
-public class Card_Company {
+public class CardCompany {
     List<Map<String,Object>> cards = new ArrayList<>();
     DisplayManager displayManager;
 
-    public void Card_Company(){
+    public CardCompany(){
 
         try {
             String filePath = "src/chat6/Card.txt";
