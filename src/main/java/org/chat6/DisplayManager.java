@@ -1,5 +1,6 @@
 package org.chat6;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -221,6 +222,13 @@ public class DisplayManager extends JFrame {
 
     void showErrorMessage(JLabel j) {
         j.setVisible(true);
+    } 
+
+    public void displayPaymentSuccess() {
+
+    }
+    public void displayInsufficientBalance() {
+
     }
 
     void showItems() {
@@ -265,3 +273,4 @@ public class DisplayManager extends JFrame {
         });
     }
 }
+

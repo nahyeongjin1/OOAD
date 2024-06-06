@@ -1,19 +1,19 @@
 package org.chat6;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+
+import java.io.*;
+import java.util.*;
 
 public class CardCompany {
     List<Map<String,Object>> cards = new ArrayList<>();
-    CardCompany(){
+    DisplayManager displayManager;
+
+    public CardCompany(){
 
         try {
             String filePath = "src/main/java/org/chat6/Card.txt";
+
             FileReader fileReader = new FileReader(filePath);
             BufferedReader br = new BufferedReader(fileReader);
             String line;
@@ -37,6 +37,30 @@ public class CardCompany {
 
     }
 
+
+    public void init(DisplayManager displayManager) {
+        this.displayManager = displayManager;
+    }
+
+    public boolean requestPayment(String cardNumber, Integer totalPrice) {
+        int balance;
+        boolean isSuccess = false;
+
+        for(Map<String,Object> element : cards) {
+            if (element.get("CardNumber").equals(cardNumber)) {
+                balance = (Integer)element.get("Balance");
+                if (balance >= totalPrice) {
+                    balance -= totalPrice;
+                    element.put("Balance", balance);
+                    isSuccess = true;
+                }
+                break;
+            }
+        }
+        return isSuccess;
+    }
+}
+
     boolean requestValidCard(String card){
         for(Map<String,Object> element : cards){
             if(element.get("CardNumber").equals(card)) {
@@ -46,4 +70,3 @@ public class CardCompany {
         return false;
     }
 }
-
