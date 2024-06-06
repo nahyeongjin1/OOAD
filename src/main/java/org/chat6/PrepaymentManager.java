@@ -79,16 +79,19 @@ public class PrepaymentManager {
 
         sortDvmList();
 
+        String target_id = dvmList.get(0).getDvm_id();
+        dvmList.remove(0);
+
         msg_req_prepayment_msg_content.put("item_code", item_code);
         msg_req_prepayment_msg_content.put("item_num", item_num);
         msg_req_prepayment_msg_content.put("cert_code", cert_code);
 
         msg_req_prepayment.put("msg_type", "req_prepay");
         msg_req_prepayment.put("src_id", "Team8");
-        msg_req_prepayment.put("dst_id", dvmList.get(0).getDvm_id());
+        msg_req_prepayment.put("dst_id", target_id);
         msg_req_prepayment.put("msg_content", msg_req_prepayment_msg_content);
 
-        network.clientStart(dvmList.get(0).getDvm_id().charAt(4)-1, msg_req_prepayment);
+        network.clientStart(target_id.charAt(4)-1, msg_req_prepayment);
     }
 
     //(client)
@@ -101,12 +104,17 @@ public class PrepaymentManager {
             dvmList.clear();
         } else {
             System.out.println("can't prepay");
+            if(dvmList.isEmpty()) {
+                System.out.println("no dvm");
+
+                //call no available dvm -> display
+                return;
+            }
             sendAskPrepaymentMsg(
                     Integer.parseInt(msg_res_prepayment_msg_content.get("item_code").toString()),
                     Integer.parseInt(msg_res_prepayment_msg_content.get("item_num").toString()),
                     certCode
             );
-            dvmList.remove(0);
         }
     }
 
