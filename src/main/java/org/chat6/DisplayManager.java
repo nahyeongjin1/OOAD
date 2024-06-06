@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.prefs.Preferences;
 
 public class DisplayManager extends JFrame {
     JPanel currentPanel;
@@ -186,10 +187,10 @@ public class DisplayManager extends JFrame {
     } 
 
     public void displayPaymentSuccess() {
-
+        printMsgAndMainScene("payment success");
     }
     public void displayInsufficientBalance() {
-
+        printMsgAndMainScene("insufficient balance");
     }
 
     void showItems() {
@@ -261,7 +262,8 @@ public class DisplayManager extends JFrame {
             } else {
                 prepaymentManager.askStockRequest(Integer.parseInt(inputItemCode.getText()), Integer.parseInt(inputItemNum.getText()));
                 currentPanel.setVisible(false);
-                printMsgAndMainScene("fail");
+                askPrepayment(Integer.parseInt(inputItemCode.getText()), Integer.parseInt(inputItemNum.getText()));
+                //printMsgAndMainScene("fail");
             }
 
         });
@@ -301,6 +303,27 @@ public class DisplayManager extends JFrame {
 
 
     }
+
+    public void askPrepayment(int inputItemCode, int inputItemNum) {
+        getContentPane().removeAll();
+        currentPanel = new JPanel();
+        JButton homeBtn = new JButton("Home");
+        JButton smbtn = new JButton("prepayment?");
+
+        currentPanel.add(homeBtn);
+        currentPanel.add(smbtn);
+        add(currentPanel);
+
+        homeBtn.addActionListener(e -> {
+            currentPanel.setVisible(false);
+            printMainScene();
+        });
+        smbtn.addActionListener(e -> {
+            currentPanel.setVisible(false);
+            prepaymentManager.askStockRequest(inputItemCode, inputItemNum);
+        });
+    }
+
 
 }
 
