@@ -10,7 +10,7 @@ public class PaymentManager {
         this.cardCompany = cardCompany;
     }
 
-    public void startPayment(String cardNumber, Integer totalPrice) {
-        cardCompany.requestPayment(cardNumber, totalPrice);
+    public boolean startPayment(String cardNumber, Integer totalPrice) {
+        return cardCompany.requestPayment(cardNumber, totalPrice);
     }
 }

@@ -7,6 +7,7 @@ public class StockManager {
     private int[][] selectedStock;
     private int[] validStocks = {3,7,12,15,16};
     PaymentManager paymentManager;
+    VMController vmController;
   
     public StockManager() {
         stockList = new int[20];
@@ -17,8 +18,9 @@ public class StockManager {
     }
 
 
-    public void init(PaymentManager paymentManager) {
+    public void init(PaymentManager paymentManager, VMController vmController) {
         this.paymentManager = paymentManager;
+        this.vmController = vmController;
     }
 
     public boolean checkStockAndPayment(int itemCode, int itemNum) {
@@ -26,8 +28,7 @@ public class StockManager {
         if (itemNum <= stockList[itemCode]) {
             reduceStock(itemCode, itemNum);
             // temp
-            paymentManager.startPayment("12345678", 1000);
-            return true;
+            return paymentManager.startPayment("12345678", 1000);
         }
       return false;
     }
