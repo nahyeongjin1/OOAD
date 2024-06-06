@@ -318,7 +318,6 @@ public class DisplayManager extends JFrame {
         inputItemCode.getDocument().addDocumentListener(documentListener);
         inputItemNum.getDocument().addDocumentListener(documentListener);
 
-
     }
 
     public void askPrepayment() {
