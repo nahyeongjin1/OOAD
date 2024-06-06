@@ -21,7 +21,7 @@ public class VMController {
         CardCompany cardCompany = new CardCompany();
         StockManager stockManager = new StockManager();
         AdminManager adminManager = new AdminManager(10, 5, stockManager);
-        DisplayManager displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager);
+        DisplayManager displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager, this);
         PrepaymentManager prepaymentManager = new PrepaymentManager(stockManager, authenticationCode);
         Network network = new Network(prepaymentManager);
         prepaymentManager.setNetwork(network);
@@ -41,5 +41,9 @@ public class VMController {
 
     public Map<Integer, Integer> getItem_list() {
         return item_list;
+    }
+
+    public void setCardInfo(Map<String,Integer> card){
+        this.card = card;
     }
 }
