@@ -312,6 +312,8 @@ public class DisplayManager extends JFrame {
         currentPanel.add(smbtn);
         add(currentPanel);
 
+
+        System.out.println("hi");
         homeBtn.addActionListener(e -> {
             currentPanel.setVisible(false);
             printMainScene();
