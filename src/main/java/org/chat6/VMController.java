@@ -7,6 +7,7 @@ public class VMController {
     private String dvm_id;
     private int x;
     private int y;
+    private Map<String,Integer> card = new HashMap<>();
 
     private Map<Integer, Integer> item_list = new HashMap<>();
 
@@ -21,7 +22,7 @@ public class VMController {
         CardCompany cardCompany = new CardCompany();
         StockManager stockManager = new StockManager();
         AdminManager adminManager = new AdminManager(10, 5, stockManager);
-        DisplayManager displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager);
+        DisplayManager displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager,this);
     }
 
     public int getX() {
@@ -38,5 +39,9 @@ public class VMController {
 
     public Map<Integer, Integer> getItem_list() {
         return item_list;
+    }
+
+    public void setCardInfo(Map<String,Integer> card){
+        this.card = card;
     }
 }

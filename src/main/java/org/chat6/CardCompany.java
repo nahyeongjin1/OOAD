@@ -61,12 +61,12 @@ public class CardCompany {
     }
 
 
-    boolean requestValidCard(String card){
+    int requestValidCard(String card){
         for(Map<String,Object> element : cards){
             if(element.get("CardNumber").equals(card)) {
-                return true;
+                return (int)element.get("Balance");
             }
         }
-        return false;
+        return -1;
     }
 }
