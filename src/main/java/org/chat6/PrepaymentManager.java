@@ -11,6 +11,7 @@ public class PrepaymentManager {
     private Network network;
     private StockManager stockManager;
     private DisplayManager displayManager;
+    private PaymentManager paymentManager;
     private AuthenticationCode authenticationCode;
     private String sendingCode;
 
@@ -19,9 +20,10 @@ public class PrepaymentManager {
         this.authenticationCode = authenticationCode;
     }
 
-    public void init(Network network, DisplayManager displayManager) {
+    public void init(Network network, DisplayManager displayManager, PaymentManager paymentManager) {
         this.network = network;
         this.displayManager = displayManager;
+        this.paymentManager = paymentManager;
     }
 
     //(broadcast)(client)
@@ -113,13 +115,22 @@ public class PrepaymentManager {
                 }
             }
             dvmList.clear();
-            displayManager.printMsgAndMainScene("Prepayment Success\n" + "authentication code : " + sendingCode + "\n" + "Coordinate : (" + targetX + ", " + targetY + ")");
 
+            boolean paymentResult = paymentManager.startPayment(
+                    Integer.parseInt(msg_res_prepayment_msg_content.get("item_code").toString()),
+                    Integer.parseInt(msg_res_prepayment_msg_content.get("item_num").toString())
+            );
+
+            if(paymentResult) {
+                displayManager.printMsgAndMainScene("Prepayment Success\n" + "authentication code : " + sendingCode + "\n" + "Coordinate : (" + targetX + ", " + targetY + ")");
+            } else {
+                displayManager.failPayment();
+            }
         } else {
             System.out.println("can't prepay");
             if(dvmList.isEmpty()) {
                 System.out.println("no dvm");
-                displayManager.failPayment();
+                displayManager.printMsgAndMainScene("no dvm");
                 return;
             }
             displayManager.prePaymentUI();
@@ -127,10 +138,10 @@ public class PrepaymentManager {
     }
 
     //(server)
-    public int  otherVMPrepaymentRequest(int item_code, int item_num) {
+    public int  otherVMPrepaymentRequest(int item_code) {
         //usecase5
 
-        int stock = stockManager.checkStock(item_code, item_num);
+        int stock = stockManager.checkStock(item_code);
 
         return stock;
     }
@@ -150,6 +161,9 @@ public class PrepaymentManager {
 
     public String nearestDVMcoordinate() {
         sortDvmList();
+        if(dvmList.isEmpty()) {
+            return null;
+        }
         return "(x : " + dvmList.get(0).getX() + ", y : " + dvmList.get(0).getY() + ")";
     }
 }

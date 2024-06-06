@@ -42,14 +42,12 @@ public class DisplayManager extends JFrame {
     }
 
     void printMainScene() {
+
         getContentPane().removeAll();
         currentPanel = new JPanel();
         JButton codeBtn = new JButton("Authentication Code");
         JButton cardBtn = new JButton("Card");
         JButton adminBtn = new JButton("Admin");
-        userInputItemCode = -1;
-        userInputItemNum = -1;
-
         currentPanel.add(codeBtn);
         currentPanel.add(adminBtn);
         currentPanel.add(cardBtn);
@@ -263,13 +261,20 @@ public class DisplayManager extends JFrame {
         submitBtn.addActionListener(e -> {
             userInputItemCode = Integer.parseInt(inputItemCode.getText());
             userInputItemNum = Integer.parseInt(inputItemNum.getText());
+            System.out.println("userInputItemCode: " + userInputItemCode);
+            System.out.println("userInputItemNum: " + userInputItemNum);
 
             boolean result = stockManager.selectStock(userInputItemCode, userInputItemNum);
+
             if (result) {
                 currentPanel.setVisible(false);
                 stockManager.printStockList();
-                paymentManager.startPayment(items.get(userInputItemCode-1).price, userInputItemNum);
-                printMsgAndMainScene("good deal");
+                boolean paymentResult = paymentManager.startPayment(items.get(userInputItemCode-1).price, userInputItemNum);
+                if(paymentResult) {
+                    printMsgAndMainScene("good deal");
+                } else {
+                    failPayment();
+                }
             } else {
                 prepaymentManager.askStockRequest(userInputItemCode, userInputItemNum);
                 currentPanel.setVisible(false);
@@ -295,8 +300,9 @@ public class DisplayManager extends JFrame {
 
             private void calculate() {
                 try {
-                    int itemCode = userInputItemCode;
-                    int itemNum = userInputItemNum;
+                    int itemCode = Integer.parseInt(inputItemCode.getText());
+                    System.out.println(itemCode);
+                    int itemNum = Integer.parseInt(inputItemNum.getText());
                     int total = items.get(itemCode - 1).price * itemNum;
                     totalPrice.setText("total : "+total);
                     errorMsg.setVisible(false);
@@ -340,6 +346,10 @@ public class DisplayManager extends JFrame {
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
         String targetDVM_coordinate = prepaymentManager.nearestDVMcoordinate();
+        if(targetDVM_coordinate == null) {
+            printMsgAndMainScene("no DVM");
+            return;
+        }
         JLabel label = new JLabel("“Would you like to make a payment for the DVM located at a distance of" + targetDVM_coordinate + "? ");
         JButton paymentBtn = new JButton("payment yes!!");
 
@@ -361,6 +371,7 @@ public class DisplayManager extends JFrame {
     }
 
     void failPayment() {
+        stockManager.restoreStock(userInputItemCode, userInputItemNum);
         printMsgAndMainScene("payment fail");
     }
 }
