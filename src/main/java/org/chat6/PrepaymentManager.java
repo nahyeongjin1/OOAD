@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PrepaymentManager {
 
-    private List<VMController> dvmList = new ArrayList<>();
+    private List<DVM> dvmList = new ArrayList<>();
     private Network network;
 
 
@@ -49,8 +49,12 @@ public class PrepaymentManager {
     public void generateDVMList(int coor_x, int coor_y, String id) {
         //sort by distance
 
-        VMController dvm = new VMController( id, coor_x, coor_y);
+        DVM dvm = new DVM(id, coor_x, coor_y);
         dvmList.add(dvm);
+    }
+
+    public List<DVM> getDvmList() {
+        return dvmList;
     }
 
     //(client)
