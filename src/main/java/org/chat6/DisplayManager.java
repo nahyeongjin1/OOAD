@@ -6,7 +6,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DisplayManager extends JFrame {
     JPanel currentPanel;
@@ -14,8 +16,10 @@ public class DisplayManager extends JFrame {
     CardCompany cardCompany;
     StockManager stockManager;
     AdminManager adminManager;
+    VMController vmController;
 
-    DisplayManager(AuthenticationCode authenticationCode, CardCompany cardCompany, StockManager stockManager, AdminManager adminManager) {
+    DisplayManager(AuthenticationCode authenticationCode, CardCompany cardCompany, StockManager stockManager, AdminManager adminManager, VMController vmController) {
+        this.vmController = vmController;
         this.authenticationCode = authenticationCode;
         this.cardCompany = cardCompany;
         this.stockManager = stockManager;
@@ -80,13 +84,16 @@ public class DisplayManager extends JFrame {
             printMainScene();
         });
         submitBtn.addActionListener(e -> {
-            boolean result = cardCompany.requestValidCard(input.getText());
+            int result = cardCompany.requestValidCard(input.getText()); // 유효하면 잔액 반환, 유효하지 않으면-1반환
             System.out.println(result);
-            if (result) {
+            if (result==-1) {
+                showErrorMessage(errorlabel);
+            } else {
+                Map<String, Integer> cardInfo = new HashMap<>();
+                cardInfo.put(input.getText(),result);
+                vmController.setCardInfo(cardInfo);
                 currentPanel.setVisible(false);
                 showItems();
-            } else {
-                showErrorMessage(errorlabel);
             }
         });
         add(currentPanel);
