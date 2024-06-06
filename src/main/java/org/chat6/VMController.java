@@ -47,4 +47,5 @@ public class VMController {
     public void setCardInfo(Map<String,Integer> card){
         this.card = card;
     }
+
 }

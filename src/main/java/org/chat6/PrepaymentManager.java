@@ -59,9 +59,27 @@ public class PrepaymentManager {
         dvmList.add(dvm);
     }
 
+    public void sortDvmList() {
+        for (int i = 0; i < dvmList.size(); i++) {
+            for (int j = i + 1; j < dvmList.size(); j++) {
+                if (dvmList.get(i).getDistance() > dvmList.get(j).getDistance()) {
+                    DVM temp = dvmList.get(i);
+                    dvmList.set(i, dvmList.get(j));
+                    dvmList.set(j, temp);
+                }
+            }
+        }
+    }
+
     public List<DVM> getDvmList() {
         return dvmList;
     }
+
+    public void clearDvmList() {
+        dvmList.clear();
+    }
+
+
 
     //(client)
     public void askPrepayment(String id, int item_code, int item_num, String cert_code) {

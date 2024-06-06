@@ -11,11 +11,8 @@ public class DVM {
         this.y = y;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+    public double getDistance() {
+        double distance = Math.sqrt((30-x) * (30-x) + (30-y) * (30-y));
+        return distance;
     }
 }
