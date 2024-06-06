@@ -41,13 +41,19 @@ public class CardCompany {
 
     public boolean requestPayment(String cardNumber, Integer totalPrice) {
         int balance;
+        boolean isSuccess = false;
+
         for(Map<String,Object> element : cards) {
             if (element.get("CardNumber").equals(cardNumber)) {
                 balance = (Integer)element.get("Balance");
-
+                if (balance >= totalPrice) {
+                    balance -= totalPrice;
+                    element.put("Balance", balance);
+                    isSuccess = true;
+                }
+                break;
             }
         }
-        boolean isSuccess = false;
         return isSuccess;
     }
 }

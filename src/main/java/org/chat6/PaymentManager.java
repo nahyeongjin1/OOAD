@@ -6,7 +6,7 @@ public class PaymentManager {
 
     public PaymentManager() {}
 
-    public void setCardCompany(CardCompany cardCompany) {
+    public void init(CardCompany cardCompany) {
         this.cardCompany = cardCompany;
     }
 
