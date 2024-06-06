@@ -1,4 +1,4 @@
-import org.example.Admin;
+import org.chat6.Admin;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;

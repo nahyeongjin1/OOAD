@@ -1,5 +1,6 @@
 package org.chat6;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -74,6 +75,27 @@ public class DisplayManager extends JFrame {
         JButton submitBtn = new JButton("Submit");
 
         errorlabel.setVisible(false);
+
+        JFrame frame = new JFrame("5x4");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+
+        String[][] data = {
+                {"1", "2", "3", "4"},
+                {"5", "6", "7", "8"},
+                {"9", "10", "11", "12"},
+                {"13", "14", "15", "16"},
+                {"17", "18", "19", "20"}
+        };
+
+        String[] columnNames = {"1", "2", "3", "4"};
+        JTable table = new JTable(data, columnNames);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        frame.add(scrollPane, BorderLayout.CENTER);
+
+        frame.setVisible(true);
+
 
         currentPanel.add(homeBtn, BorderLayout.PAGE_START);
         currentPanel.add(label, BorderLayout.WEST);
@@ -200,6 +222,13 @@ public class DisplayManager extends JFrame {
 
     void showErrorMessage(JLabel j) {
         j.setVisible(true);
+    } 
+
+    public void displayPaymentSuccess() {
+
+    }
+    public void displayInsufficientBalance() {
+
     }
 
     void showItems() {
@@ -244,3 +273,4 @@ public class DisplayManager extends JFrame {
         });
     }
 }
+
