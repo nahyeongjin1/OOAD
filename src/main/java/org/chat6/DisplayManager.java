@@ -1,9 +1,12 @@
 package org.chat6;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DisplayManager extends JFrame {
     JPanel currentPanel;
@@ -36,27 +39,18 @@ public class DisplayManager extends JFrame {
         currentPanel.add(codeBtn);
         currentPanel.add(adminBtn);
         currentPanel.add(cardBtn);
-        codeBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                currentPanel.setVisible(false);
-                clickInputCode();
-            }
+        codeBtn.addActionListener(e -> {
+            currentPanel.setVisible(false);
+            clickInputCode();
         });
-        cardBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                currentPanel.setVisible(false);
-                clickInputCard();
-            }
+        cardBtn.addActionListener(e -> {
+            currentPanel.setVisible(false);
+            clickInputCard();
         });
-        adminBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("admin");
-                currentPanel.setVisible(false);
-                clickInputAdmin();
-            }
+        adminBtn.addActionListener(e -> {
+            System.out.println("admin");
+            currentPanel.setVisible(false);
+            clickInputAdmin();
         });
         add(currentPanel);
         revalidate();
@@ -81,24 +75,18 @@ public class DisplayManager extends JFrame {
         currentPanel.add(errorlabel);
         currentPanel.add(submitBtn, BorderLayout.PAGE_END);
 
-        homeBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                currentPanel.setVisible(false);
-                printMainScene();
-            }
+        homeBtn.addActionListener(e -> {
+            currentPanel.setVisible(false);
+            printMainScene();
         });
-        submitBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boolean result = cardCompany.requestValidCard(input.getText());
-                System.out.println(result);
-                if (result) {
-                    currentPanel.setVisible(false);
-                    showItems();
-                } else {
-                    showErrorMessage(errorlabel);
-                }
+        submitBtn.addActionListener(e -> {
+            boolean result = cardCompany.requestValidCard(input.getText());
+            System.out.println(result);
+            if (result) {
+                currentPanel.setVisible(false);
+                showItems();
+            } else {
+                showErrorMessage(errorlabel);
             }
         });
         add(currentPanel);
@@ -123,24 +111,18 @@ public class DisplayManager extends JFrame {
         currentPanel.add(input, BorderLayout.CENTER);
         currentPanel.add(submitBtn, BorderLayout.PAGE_END);
 
-        homeBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                currentPanel.setVisible(false);
-                printMainScene();
-            }
+        homeBtn.addActionListener(e -> {
+            currentPanel.setVisible(false);
+            printMainScene();
         });
-        submitBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boolean result = authenticationCode.validateCode(input.getText());
-                System.out.println(result);
-                if (result) {
-                    currentPanel.setVisible(false);
-                    printMsgAndMainScene("good deal");
-                } else {
-                    showErrorMessage(errorlabel);
-                }
+        submitBtn.addActionListener(e -> {
+            boolean result = authenticationCode.validateCode(input.getText());
+            System.out.println(result);
+            if (result) {
+                currentPanel.setVisible(false);
+                printMsgAndMainScene("good deal");
+            } else {
+                showErrorMessage(errorlabel);
             }
         });
 
@@ -160,21 +142,15 @@ public class DisplayManager extends JFrame {
         currentPanel.add(inputPW);
         currentPanel.add(submitBtn);
         add(currentPanel);
-        homeBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                currentPanel.setVisible(false);
-                printMainScene();
-            }
+        homeBtn.addActionListener(e -> {
+            currentPanel.setVisible(false);
+            printMainScene();
         });
-        submitBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                adminManager.checkPW(Integer.parseInt(inputID.getText()), Integer.parseInt(inputPW.getText()));
-                currentPanel.setVisible(false);
-                stockManager.printStockList();
-                printMainScene();
-            }
+        submitBtn.addActionListener(e -> {
+            adminManager.checkPW(Integer.parseInt(inputID.getText()), Integer.parseInt(inputPW.getText()));
+            currentPanel.setVisible(false);
+            stockManager.printStockList();
+            printMainScene();
         });
     }
 
@@ -189,12 +165,9 @@ public class DisplayManager extends JFrame {
         currentPanel.add(label);
         add(currentPanel);
 
-        homeBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                currentPanel.setVisible(false);
-                printMainScene();
-            }
+        homeBtn.addActionListener(e -> {
+            currentPanel.setVisible(false);
+            printMainScene();
         });
     }
 
@@ -203,44 +176,112 @@ public class DisplayManager extends JFrame {
     }
 
     void showItems() {
+        currentPanel = new JPanel();
+        List<Item> items = new ArrayList<>();
+        items.add(new Item(1000, 1 , "콜라"));
+        items.add(new Item(1000, 2 , "사이다"));
+        items.add(new Item(1000, 3 , "녹차"));
+        items.add(new Item(1000, 4 , "홍차"));
+        items.add(new Item(1000, 5 , "밀크티"));
+        items.add(new Item(1000, 6 , "탄산수"));
+        items.add(new Item(1000, 7 , "보리차"));
+        items.add(new Item(1000, 8 , "캔커피"));
+        items.add(new Item(1000,9, "물"));
+        items.add(new Item(1000, 10 , "에너지드링크"));
+        items.add(new Item(1000, 11 , "유자차"));
+        items.add(new Item(1000, 12 , "식혜"));
+        items.add(new Item(1000, 13 , "아이스티"));
+        items.add(new Item(1000, 14 , "딸기주스"));
+        items.add(new Item(1000, 15 , "오렌지주스"));
+        items.add(new Item(1000, 16 , "포도주스"));
+        items.add(new Item(1000, 17 , "이온음료"));
+        items.add(new Item(1000, 18 , "아메리카노"));
+        items.add(new Item(1000, 19 , "핫초코"));
+        items.add(new Item(1000, 20 , "카페라떼"));
+
         getContentPane().removeAll();
         stockManager.printStockList();
+        JPanel itemPanel = new JPanel();
+        GridLayout gl= new GridLayout(5,4);
+        JLabel errorMsg = new JLabel("Fail.");
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
         JTextField inputItemCode = new JTextField(10);
         JTextField inputItemNum = new JTextField(10);
-        JLabel totalPrice = new JLabel("");
+        JLabel totalPrice = new JLabel("total : ");
         JButton submitBtn = new JButton("Purchase");
+        Border border = BorderFactory.createLineBorder(Color.BLACK);
 
+        itemPanel.setLayout(gl);
+        errorMsg.setVisible(false);
+        currentPanel.add(itemPanel);
+        currentPanel.add(errorMsg);
         currentPanel.add(homeBtn);
         currentPanel.add(inputItemCode);
         currentPanel.add(inputItemNum);
         currentPanel.add(totalPrice);
         currentPanel.add(submitBtn);
 
+
         add(currentPanel);
 
-        homeBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                currentPanel.setVisible(false);
-                printMainScene();
-            }
-        });
-        submitBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boolean result = stockManager.selectStock(Integer.parseInt(inputItemCode.getText()), Integer.parseInt(inputItemNum.getText()));
-                if (result) {
-                    currentPanel.setVisible(false);
-                    stockManager.printStockList();
-                    printMsgAndMainScene("good deal");
-                } else {
-                    currentPanel.setVisible(false);
-                    printMsgAndMainScene("fail");
-                }
+        for(int i =0;i<20;i++){
+            JTextField field = new JTextField(items.get(i).name+"("+items.get(i).code+")",10);
+            field.setBorder(border);
+            itemPanel.add(field);
+        }
 
-            }
+        homeBtn.addActionListener(e -> {
+            currentPanel.setVisible(false);
+            printMainScene();
         });
+        submitBtn.addActionListener(e -> {
+            boolean result = stockManager.selectStock(Integer.parseInt(inputItemCode.getText()), Integer.parseInt(inputItemNum.getText()));
+            if (result) {
+                currentPanel.setVisible(false);
+                stockManager.printStockList();
+                printMsgAndMainScene("good deal");
+            } else {
+                currentPanel.setVisible(false);
+                printMsgAndMainScene("fail");
+            }
+
+        });
+
+        DocumentListener documentListener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                calculate();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                calculate();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                calculate();
+            }
+
+            private void calculate() {
+                try {
+                    int itemCode = Integer.parseInt(inputItemCode.getText());
+                    int itemNum = Integer.parseInt(inputItemNum.getText());
+                    int total = items.get(itemCode - 1).price * itemNum;
+                    totalPrice.setText("total : "+total);
+                    errorMsg.setVisible(false);
+                    revalidate();
+                } catch (NumberFormatException e) {
+                    totalPrice.setText("total : ");
+                    errorMsg.setVisible(true);
+                    revalidate();
+                }
+            }
+        };
+
+        inputItemCode.getDocument().addDocumentListener(documentListener);
+        inputItemNum.getDocument().addDocumentListener(documentListener);
+
+
     }
+
 }
