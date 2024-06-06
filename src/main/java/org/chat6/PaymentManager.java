@@ -15,8 +15,9 @@ public class PaymentManager {
         this.cardNumber = cardNumber;
     }
 
-    public void startPayment(int itemCode, int itemNum) {
-        int totalPrice = itemCode * itemNum;
-        cardCompany.requestPayment(cardNumber, totalPrice);
+    public boolean startPayment(int itemPrice, int itemNum) {
+        int totalPrice = itemPrice * itemNum;
+        boolean paymentResult = cardCompany.requestPayment(cardNumber, totalPrice);
+        return paymentResult;
     }
 }

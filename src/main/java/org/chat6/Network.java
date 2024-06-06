@@ -42,10 +42,7 @@ public class Network extends Thread {
         otherDVM_IP_Port.put(otherDVMList[8], 8);
 
         int i=0;
-        for(String key : otherDVM_IP_Port.keySet()) {
-            otherDVMList[i++] = key;
-            System.out.println(i + ": " + otherDVMList[i-1] + " " + otherDVM_IP_Port.get(key));
-        }
+
     }
 
     private static List<Network.ClientHandler> clients = new ArrayList<>();
@@ -156,7 +153,7 @@ public class Network extends Thread {
                 if (msg.get("msg_type").equals("req_stock")) {
                     JSONObject msg_content = (JSONObject) msg.get("msg_content");
 
-                    int stock = p.otherVMPrepaymentRequest(Integer.parseInt(msg_content.get("item_code").toString()), Integer.parseInt(msg_content.get("item_num").toString()));
+                    int stock = p.otherVMPrepaymentRequest(Integer.parseInt(msg_content.get("item_code").toString()));
 
                     JSONObject responseMsg = new JSONObject();
                     responseMsg.put("msg_type", "resp_stock");
