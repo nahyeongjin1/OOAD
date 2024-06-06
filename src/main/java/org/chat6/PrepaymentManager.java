@@ -101,6 +101,8 @@ public class PrepaymentManager {
 
         if(msg_res_prepayment_msg_content.get("availability").toString().equals("T")) {
             System.out.println("can Prepayment");
+
+
             dvmList.clear();
         } else {
             System.out.println("can't prepay");

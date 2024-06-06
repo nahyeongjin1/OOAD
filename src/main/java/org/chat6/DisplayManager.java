@@ -322,7 +322,7 @@ public class DisplayManager extends JFrame {
         });
         smbtn.addActionListener(e -> {
             currentPanel.setVisible(false);
-            prepaymentManager.askStockRequest(inputItemCode, inputItemNum);
+            prepaymentManager.sendAskPrepaymentMsg(inputItemCode, inputItemNum, authenticationCode.generateRandomString());
         });
     }
 
