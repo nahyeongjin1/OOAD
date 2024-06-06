@@ -22,8 +22,8 @@ public class VMController {
         CardCompany cardCompany = new CardCompany();
         StockManager stockManager = new StockManager();
         AdminManager adminManager = new AdminManager(10, 5, stockManager);
-        DisplayManager displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager, this);
         PrepaymentManager prepaymentManager = new PrepaymentManager(stockManager, authenticationCode);
+        DisplayManager displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager, this, prepaymentManager);
         Network network = new Network(prepaymentManager);
         prepaymentManager.setNetwork(network);
     }

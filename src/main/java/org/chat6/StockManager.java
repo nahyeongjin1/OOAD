@@ -11,7 +11,7 @@ public class StockManager {
   
     public StockManager() {
         stockList = new int[20];
-        Arrays.fill(stockList, 99);
+        Arrays.fill(stockList, 0);
         selectedStock = new int[10][20];
         for (int i = 0; selectedStock.length > i; i++) {
           Arrays.fill(selectedStock[i], 99);
@@ -62,10 +62,9 @@ public class StockManager {
     }
 
     public boolean selectStock(int itemCode, int itemNum) {
-        if (itemCode <= 20 && itemCode >= 1 && itemNum >= 1 && stockList[itemCode] >= itemNum) {
+        if (itemCode <= 20 && itemCode >= 1 && itemNum >= 1 && stockList[itemCode - 1] >= itemNum) {
             selectedStock[0][itemCode] += itemNum;
             stockList[itemCode] -= itemNum;
-
             return true;
         }
         return false;
