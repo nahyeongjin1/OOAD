@@ -9,7 +9,13 @@ public class PrepaymentManager {
 
     private List<DVM> dvmList = new ArrayList<>();
     private Network network;
+    private StockManager stockManager;
+    private AuthenticationCode authenticationCode;
 
+    public PrepaymentManager(StockManager stockManager, AuthenticationCode authenticationCode){
+        this.stockManager = stockManager;
+        this.authenticationCode = authenticationCode;
+    }
 
     public void setNetwork(Network network) {
         this.network = network;
@@ -90,7 +96,7 @@ public class PrepaymentManager {
     public int  otherVMPrepaymentRequest(int item_code, int item_num) {
         //usecase5
 
-        int stock = 5;
+        int stock = stockManager.checkStock(item_code, item_num);
 
         return stock;
     }
@@ -98,9 +104,10 @@ public class PrepaymentManager {
     // (server)
     public boolean otherVMPrepaymentResponse(int item_code, int item_num, String cert_code) {
         //
-        boolean flag = true;
+        boolean flag = stockManager.selectStock(item_code, item_num);
 
         if(flag) {
+            authenticationCode.addCode(cert_code, item_code, item_num);
             return true;
         } else {
             return false;

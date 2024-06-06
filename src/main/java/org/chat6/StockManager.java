@@ -32,8 +32,8 @@ public class StockManager {
       return false;
     }
 
-    public boolean checkStock(int itemCode, int itemNum) {
-        return itemNum == stockList[itemCode];
+    public int checkStock(int itemCode, int itemNum) {
+        return stockList[itemCode];
     }
 
     public void replenishmentStock(int clientNum) {

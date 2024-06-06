@@ -165,8 +165,8 @@ public class Network extends Thread {
                     JSONObject responseMsg_content = new JSONObject();
                     responseMsg_content.put("item_code", msg_content.get("item_code"));
                     responseMsg_content.put("item_num", stock);
-                    responseMsg_content.put("coor_x", 0);
-                    responseMsg_content.put("coor_y", 0);
+                    responseMsg_content.put("coor_x", 30);
+                    responseMsg_content.put("coor_y", 30);
 
                     out.println(responseMsg.toString());
                 }
