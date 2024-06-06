@@ -15,4 +15,8 @@ public class DVM {
         double distance = Math.sqrt((30-x) * (30-x) + (30-y) * (30-y));
         return distance;
     }
+
+    public String getDvm_id() {
+        return dvm_id;
+    }
 }

@@ -52,14 +52,14 @@ public class PrepaymentManager {
         }
     }
 
-    public void generateDVMList(int coor_x, int coor_y, String id) {
+    private void generateDVMList(int coor_x, int coor_y, String id) {
         //sort by distance
 
         DVM dvm = new DVM(id, coor_x, coor_y);
         dvmList.add(dvm);
     }
 
-    public void sortDvmList() {
+    private void sortDvmList() {
         for (int i = 0; i < dvmList.size(); i++) {
             for (int j = i + 1; j < dvmList.size(); j++) {
                 if (dvmList.get(i).getDistance() > dvmList.get(j).getDistance()) {
@@ -71,21 +71,16 @@ public class PrepaymentManager {
         }
     }
 
-    public List<DVM> getDvmList() {
-        return dvmList;
-    }
-
-    public void clearDvmList() {
-        dvmList.clear();
-    }
-
-
-
     //(client)
-    public void askPrepayment(String id, int item_code, int item_num, String cert_code) {
+    public void sendAskPrepaymentMsg(int item_code, int item_num, String cert_code) {
         JSONObject msg_req_prepayment = new JSONObject();
 
         JSONObject msg_req_prepayment_msg_content = new JSONObject();
+
+        sortDvmList();
+
+        String target_id = dvmList.get(0).getDvm_id();
+        dvmList.remove(0);
 
         msg_req_prepayment_msg_content.put("item_code", item_code);
         msg_req_prepayment_msg_content.put("item_num", item_num);
@@ -93,20 +88,33 @@ public class PrepaymentManager {
 
         msg_req_prepayment.put("msg_type", "req_prepay");
         msg_req_prepayment.put("src_id", "Team8");
-        msg_req_prepayment.put("dst_id", id);
+        msg_req_prepayment.put("dst_id", target_id);
         msg_req_prepayment.put("msg_content", msg_req_prepayment_msg_content);
 
-        network.clientStart(id.charAt(4)-1, msg_req_prepayment);
+        network.clientStart(target_id.charAt(4)-1, msg_req_prepayment);
     }
 
     //(client)
     public void respPerpayment(JSONObject msg_res_prepayment) {
         JSONObject msg_res_prepayment_msg_content = (JSONObject) msg_res_prepayment.get("msg_content");
+        String certCode = authenticationCode.generateRandomString();
 
         if(msg_res_prepayment_msg_content.get("availability").toString().equals("T")) {
             System.out.println("can Prepayment");
+            dvmList.clear();
         } else {
             System.out.println("can't prepay");
+            if(dvmList.isEmpty()) {
+                System.out.println("no dvm");
+
+                //call no available dvm -> display
+                return;
+            }
+            sendAskPrepaymentMsg(
+                    Integer.parseInt(msg_res_prepayment_msg_content.get("item_code").toString()),
+                    Integer.parseInt(msg_res_prepayment_msg_content.get("item_num").toString()),
+                    certCode
+            );
         }
     }
 
