@@ -20,15 +20,26 @@ public class Network extends Thread {
     Network(PrepaymentManager prepaymentManager) {
         this.prepaymentManager = prepaymentManager;
 
-        otherDVM_IP_Port.put("1", 0);  //team1's host, port
-        otherDVM_IP_Port.put("2", 1);  //team2's host, port
-        otherDVM_IP_Port.put("3", 2);
-        otherDVM_IP_Port.put("4", 3);
-        otherDVM_IP_Port.put("5", 4);
-        otherDVM_IP_Port.put("6", 5);
-        otherDVM_IP_Port.put("7", 6);
-        otherDVM_IP_Port.put("localhost", 12345);
-        otherDVM_IP_Port.put("8", 8);
+        otherDVMList[0] = "1";
+        otherDVMList[1] = "2";
+        otherDVMList[2] = "3";
+        otherDVMList[3] = "4";
+        otherDVMList[4] = "5";
+        otherDVMList[5] = "6";
+        otherDVMList[6] = "7";
+        otherDVMList[7] = "localhost";
+        otherDVMList[8] = "8";
+
+
+        otherDVM_IP_Port.put(otherDVMList[0], 0);  //team1's host, port
+        otherDVM_IP_Port.put(otherDVMList[1], 1);  //team2's host, port
+        otherDVM_IP_Port.put(otherDVMList[2], 2);
+        otherDVM_IP_Port.put(otherDVMList[3], 3);
+        otherDVM_IP_Port.put(otherDVMList[4], 4);
+        otherDVM_IP_Port.put(otherDVMList[5], 5);
+        otherDVM_IP_Port.put(otherDVMList[6], 6);
+        otherDVM_IP_Port.put(otherDVMList[7], 12345);
+        otherDVM_IP_Port.put(otherDVMList[8], 8);
 
         int i=0;
         for(String key : otherDVM_IP_Port.keySet()) {
@@ -88,7 +99,7 @@ public class Network extends Thread {
         }
         else{
             try {
-                Socket clientSocket = new Socket(otherDVMList[clientID], otherDVM_IP_Port.get(otherDVMList[clientID]));
+                Socket clientSocket = new Socket(otherDVMList[clientID-1], otherDVM_IP_Port.get(otherDVMList[clientID-1]));
                 System.out.println("server connected.");
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -154,8 +165,8 @@ public class Network extends Thread {
                     JSONObject responseMsg_content = new JSONObject();
                     responseMsg_content.put("item_code", msg_content.get("item_code"));
                     responseMsg_content.put("item_num", stock);
-                    responseMsg_content.put("coor_x", 0);
-                    responseMsg_content.put("coor_y", 0);
+                    responseMsg_content.put("coor_x", 30);
+                    responseMsg_content.put("coor_y", 30);
 
                     out.println(responseMsg.toString());
                 }

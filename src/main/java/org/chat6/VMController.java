@@ -7,9 +7,9 @@ public class VMController {
     private String dvm_id;
     private int x;
     private int y;
-    private Map<String,Integer> card = new HashMap<>();
 
     private Map<Integer, Integer> item_list = new HashMap<>();
+    private Map<String, Integer> card;
 
     VMController(String dvm_id, int x, int y) {
         this.dvm_id = dvm_id;
@@ -22,7 +22,10 @@ public class VMController {
         CardCompany cardCompany = new CardCompany();
         StockManager stockManager = new StockManager();
         AdminManager adminManager = new AdminManager(10, 5, stockManager);
-        DisplayManager displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager,this);
+        DisplayManager displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager, this);
+        PrepaymentManager prepaymentManager = new PrepaymentManager(stockManager, authenticationCode);
+        Network network = new Network(prepaymentManager);
+        prepaymentManager.setNetwork(network);
     }
 
     public int getX() {
