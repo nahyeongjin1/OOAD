@@ -1,6 +1,7 @@
 package org.chat6;
 
 
+
 import java.io.*;
 import java.util.*;
 
@@ -11,7 +12,8 @@ public class CardCompany {
     public CardCompany(){
 
         try {
-            String filePath = "src/chat6/Card.txt";
+            String filePath = "src/main/java/org/chat6/Card.txt";
+
             FileReader fileReader = new FileReader(filePath);
             BufferedReader br = new BufferedReader(fileReader);
             String line;
@@ -35,6 +37,7 @@ public class CardCompany {
 
     }
 
+
     public void init(DisplayManager displayManager) {
         this.displayManager = displayManager;
     }
@@ -55,5 +58,15 @@ public class CardCompany {
             }
         }
         return isSuccess;
+    }
+}
+
+    boolean requestValidCard(String card){
+        for(Map<String,Object> element : cards){
+            if(element.get("CardNumber").equals(card)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
