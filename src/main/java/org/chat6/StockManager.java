@@ -5,7 +5,7 @@ import java.util.*;
 public class StockManager {
     private int[] stockList;
     private int[][] selectedStock;
-    private int[] validStocks = {3,7,12,15,16};
+    private int[] validStocks = {1,2,3,4,5};
     PaymentManager paymentManager;
     VMController vmController;
   
@@ -62,6 +62,7 @@ public class StockManager {
     }
 
     public boolean selectStock(int itemCode, int itemNum) {
+        System.out.println(" itemCode : " + itemCode + ", itemNum : " + itemNum );
         if (itemCode <= 20 && itemCode >= 1 && itemNum >= 1 && stockList[itemCode - 1] >= itemNum) {
             selectedStock[0][itemCode] += itemNum;
             stockList[itemCode] -= itemNum;
