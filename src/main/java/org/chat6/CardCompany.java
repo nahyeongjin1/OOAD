@@ -53,10 +53,13 @@ public class CardCompany {
                     balance -= totalPrice;
                     element.put("Balance", balance);
                     isSuccess = true;
+                    displayManager.displayPaymentSuccess();
+                    return isSuccess;
                 }
                 break;
             }
         }
+        displayManager.displayInsufficientBalance();
         return isSuccess;
     }
 
