@@ -127,6 +127,8 @@ public class DisplayManager extends JFrame {
         currentPanel.add(input, BorderLayout.CENTER);
         currentPanel.add(submitBtn, BorderLayout.PAGE_END);
 
+        add(currentPanel);
+
         homeBtn.addActionListener(e -> {
             currentPanel.setVisible(false);
             printMainScene();
@@ -143,7 +145,6 @@ public class DisplayManager extends JFrame {
             }
         });
 
-        add(currentPanel);
     }
 
     void clickInputAdmin() {
@@ -172,6 +173,7 @@ public class DisplayManager extends JFrame {
     }
 
     void printMsgAndMainScene(String msg) {
+        System.out.println("msg: " + msg);
         getContentPane().removeAll();
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
@@ -182,6 +184,8 @@ public class DisplayManager extends JFrame {
         currentPanel.add(label);
         add(currentPanel);
 
+        System.out.println(" - msg: " + msg);
+        revalidate();
         homeBtn.addActionListener(e -> {
             currentPanel.setVisible(false);
             printMainScene();
@@ -190,13 +194,6 @@ public class DisplayManager extends JFrame {
 
     void showErrorMessage(JLabel j) {
         j.setVisible(true);
-    } 
-
-    public void displayPaymentSuccess() {
-        printMsgAndMainScene("payment success");
-    }
-    public void displayInsufficientBalance() {
-        printMsgAndMainScene("insufficient balance");
     }
 
     List<Item> items = new ArrayList<>();
@@ -330,26 +327,6 @@ public class DisplayManager extends JFrame {
 
     }
 
-    public void askPrepayment() {
-        getContentPane().removeAll();
-        currentPanel = new JPanel();
-        JButton homeBtn = new JButton("Home");
-        JButton smbtn = new JButton("prepayment?");
-
-        currentPanel.add(homeBtn);
-        currentPanel.add(smbtn);
-        add(currentPanel);
-
-        homeBtn.addActionListener(e -> {
-            currentPanel.setVisible(false);
-            printMainScene();
-        });
-        smbtn.addActionListener(e -> {
-            currentPanel.setVisible(false);
-            prepaymentManager.sendAskPrepaymentMsg(userInputItemCode, userInputItemNum, authenticationCode.generateRandomString());
-        });
-    }
-
     void prePaymentUI() {
         getContentPane().removeAll();
         currentPanel = new JPanel();
@@ -375,8 +352,7 @@ public class DisplayManager extends JFrame {
         paymentBtn.addActionListener(e -> {
             currentPanel.setVisible(false);
             prepaymentManager.sendAskPrepaymentMsg(userInputItemCode, userInputItemNum, authenticationCode.generateRandomString());
-            int itemPrice = items.get(userInputItemCode-1).price * userInputItemNum;
-            paymentManager.startPayment(itemPrice, userInputItemNum);
+
         });
     }
 

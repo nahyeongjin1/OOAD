@@ -5,6 +5,8 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
+
 public class PrepaymentManager {
 
     private List<DVM> dvmList = new ArrayList<>();
@@ -37,7 +39,7 @@ public class PrepaymentManager {
         msg_req_stock_msg_content.put("item_num", item_num);
 
         msg_req_stock.put("msg_type", "req_stock");
-        msg_req_stock.put("src_id", "Team8");
+        msg_req_stock.put("src_id", "Team9");
         msg_req_stock.put("dst_id", "0");
         msg_req_stock.put("msg_content", msg_req_stock_msg_content);
 
@@ -93,7 +95,7 @@ public class PrepaymentManager {
         msg_req_prepayment_msg_content.put("cert_code", cert_code);
 
         msg_req_prepayment.put("msg_type", "req_prepay");
-        msg_req_prepayment.put("src_id", "Team8");
+        msg_req_prepayment.put("src_id", "Team9");
         msg_req_prepayment.put("dst_id", target_id);
         msg_req_prepayment.put("msg_content", msg_req_prepayment_msg_content);
 
@@ -101,7 +103,7 @@ public class PrepaymentManager {
     }
 
     //(client)
-    public void respPerpayment(JSONObject msg_res_prepayment) {
+    public void respPerpayment(JSONObject msg_res_prepayment) throws InterruptedException {
         JSONObject msg_res_prepayment_msg_content = (JSONObject) msg_res_prepayment.get("msg_content");
 
         if(msg_res_prepayment_msg_content.get("availability").toString().equals("T")) {
@@ -123,7 +125,8 @@ public class PrepaymentManager {
             );
 
             if(paymentResult) {
-                displayManager.printMsgAndMainScene("Prepayment Success\n" + "authentication code : " + sendingCode + "\n" + "Coordinate : (" + targetX + ", " + targetY + ")");
+                sleep(100);
+                displayManager.printMsgAndMainScene("authentication code : " + sendingCode + " " + "Coordinate : (" + targetX + ", " + targetY + ")");
             } else {
                 displayManager.failPayment();
             }
