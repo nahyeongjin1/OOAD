@@ -34,32 +34,6 @@ public class AuthenticationCode {
         }
     }
 
-    public boolean checkvalidCode(String code) {
-        boolean digit = false;
-        boolean lowerAlpha = false;
-        boolean capital = false;
-        if (code.length() != 10)
-            return false;
-        for (int i = 0; i < 10; i++) {
-            if (code.charAt(i) <= 'z' && code.charAt(i) >= 'a') {
-                lowerAlpha = true;
-                continue;
-            }
-            else if (code.charAt(i) <= 'Z' && code.charAt(i) >= 'A') {
-                capital = true;
-                continue;
-            }
-            else if (code.charAt(i) <= '9' && code.charAt(i) >= '0') {
-                digit = true;
-                continue;
-            }
-            else {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public String generateRandomString() {
         String uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
