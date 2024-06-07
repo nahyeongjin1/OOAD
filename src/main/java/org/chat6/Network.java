@@ -21,18 +21,18 @@ public class Network extends Thread {
         this.prepaymentManager = prepaymentManager;
 
         otherDVMList[0] = "1";
-        otherDVMList[1] = "2";
+        otherDVMList[1] = "13.124.36.229";
         otherDVMList[2] = "3";
         otherDVMList[3] = "4";
-        otherDVMList[4] = "192.168.66.85";
+        otherDVMList[4] = "192.168.67.105";
         otherDVMList[5] = "6";
-        otherDVMList[6] = "192.168.53.32";
+        otherDVMList[6] = "192.168.65.102";
         otherDVMList[7] = "localhost";
         otherDVMList[8] = "8";
 
 
         otherDVM_IP_Port.put(otherDVMList[0], 0);  //team1's host, port
-        otherDVM_IP_Port.put(otherDVMList[1], 1);  //team2's host, port
+        otherDVM_IP_Port.put(otherDVMList[1], 9001);  //team2's host, port
         otherDVM_IP_Port.put(otherDVMList[2], 2);
         otherDVM_IP_Port.put(otherDVMList[3], 3);
         otherDVM_IP_Port.put(otherDVMList[4], 11120);
@@ -165,8 +165,8 @@ public class Network extends Thread {
                     JSONObject responseMsg_content = new JSONObject();
                     responseMsg_content.put("item_code", msg_content.get("item_code"));
                     responseMsg_content.put("item_num", stock);
-                    responseMsg_content.put("coor_x", 30);
-                    responseMsg_content.put("coor_y", 30);
+                    responseMsg_content.put("coor_x", 1);
+                    responseMsg_content.put("coor_y", 1);
                     responseMsg.put("msg_content", responseMsg_content);
 
                     out.println(responseMsg.toString());
