@@ -28,7 +28,7 @@ public class Network extends Thread {
         otherDVMList[5] = "6";
         otherDVMList[6] = "7";
         otherDVMList[7] = "192.168.85.18";
-        otherDVMList[8] = "localhost";
+        otherDVMList[8] = "192.168.85.87";
 
 
         otherDVM_IP_Port.put(otherDVMList[0], 0);  //team1's host, port
@@ -160,7 +160,7 @@ public class Network extends Thread {
 
                     JSONObject responseMsg = new JSONObject();
                     responseMsg.put("msg_type", "resp_stock");
-                    responseMsg.put("src_id", "Team9");
+                    responseMsg.put("src_id", "Team7");
                     responseMsg.put("dst_id", msg.get("src_id"));
                     JSONObject responseMsg_content = new JSONObject();
                     responseMsg_content.put("item_code", msg_content.get("item_code"));
@@ -179,7 +179,7 @@ public class Network extends Thread {
 
                     JSONObject responseMsg = new JSONObject();
                     responseMsg.put("msg_type", "resp_prepay");
-                    responseMsg.put("src_id", "Team9");
+                    responseMsg.put("src_id", "Team7");
                     responseMsg.put("dst_id", msg.get("src_id"));
                     JSONObject responseMsg_content = new JSONObject();
                     responseMsg_content.put("item_code", msg_content.get("item_code"));
