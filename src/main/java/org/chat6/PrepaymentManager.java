@@ -32,6 +32,7 @@ public class PrepaymentManager {
 
         JSONObject msg_req_stock_msg_content = new JSONObject();
 
+
         msg_req_stock_msg_content.put("item_code", item_code);
         msg_req_stock_msg_content.put("item_num", item_num);
 

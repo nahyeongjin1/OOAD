@@ -24,7 +24,7 @@ public class Network extends Thread {
         otherDVMList[1] = "2";
         otherDVMList[2] = "3";
         otherDVMList[3] = "4";
-        otherDVMList[4] = "5";
+        otherDVMList[4] = "192.168.66.85";
         otherDVMList[5] = "6";
         otherDVMList[6] = "192.168.53.32";
         otherDVMList[7] = "localhost";
@@ -35,9 +35,9 @@ public class Network extends Thread {
         otherDVM_IP_Port.put(otherDVMList[1], 1);  //team2's host, port
         otherDVM_IP_Port.put(otherDVMList[2], 2);
         otherDVM_IP_Port.put(otherDVMList[3], 3);
-        otherDVM_IP_Port.put(otherDVMList[4], 4);
+        otherDVM_IP_Port.put(otherDVMList[4], 11120);
         otherDVM_IP_Port.put(otherDVMList[5], 5);
-        otherDVM_IP_Port.put(otherDVMList[6], 1234);
+        otherDVM_IP_Port.put(otherDVMList[6], 8080);
         otherDVM_IP_Port.put(otherDVMList[7], 12345);
         otherDVM_IP_Port.put(otherDVMList[8], 8);
 
