@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.prefs.Preferences;
 
+import static java.lang.Thread.sleep;
+
 public class DisplayManager extends JFrame {
     JPanel currentPanel;
     AuthenticationCode authenticationCode;
@@ -196,9 +198,11 @@ public class DisplayManager extends JFrame {
         printMsgAndMainScene("insufficient balance");
     }
 
+    List<Item> items = new ArrayList<>();
+
     void showItems() {
         currentPanel = new JPanel();
-        List<Item> items = new ArrayList<>();
+
         items.add(new Item(1000, 1 , "콜라"));
         items.add(new Item(1000, 2 , "사이다"));
         items.add(new Item(1000, 3 , "녹차"));
@@ -278,6 +282,11 @@ public class DisplayManager extends JFrame {
             } else {
                 prepaymentManager.askStockRequest(userInputItemCode, userInputItemNum);
                 currentPanel.setVisible(false);
+                try {
+                    sleep(1000);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
                 prePaymentUI();
                 //printMsgAndMainScene("fail");
             }
@@ -365,7 +374,8 @@ public class DisplayManager extends JFrame {
         paymentBtn.addActionListener(e -> {
             currentPanel.setVisible(false);
             prepaymentManager.sendAskPrepaymentMsg(userInputItemCode, userInputItemNum, authenticationCode.generateRandomString());
-            // 결제함수.
+            int itemPrice = items.get(userInputItemCode-1).price * userInputItemNum;
+            paymentManager.startPayment(itemPrice, userInputItemNum);
         });
     }
 

@@ -26,7 +26,7 @@ public class Network extends Thread {
         otherDVMList[3] = "4";
         otherDVMList[4] = "5";
         otherDVMList[5] = "6";
-        otherDVMList[6] = "7";
+        otherDVMList[6] = "192.168.53.32";
         otherDVMList[7] = "localhost";
         otherDVMList[8] = "8";
 
@@ -37,7 +37,7 @@ public class Network extends Thread {
         otherDVM_IP_Port.put(otherDVMList[3], 3);
         otherDVM_IP_Port.put(otherDVMList[4], 4);
         otherDVM_IP_Port.put(otherDVMList[5], 5);
-        otherDVM_IP_Port.put(otherDVMList[6], 6);
+        otherDVM_IP_Port.put(otherDVMList[6], 1234);
         otherDVM_IP_Port.put(otherDVMList[7], 12345);
         otherDVM_IP_Port.put(otherDVMList[8], 8);
 
@@ -96,7 +96,7 @@ public class Network extends Thread {
         }
         else{
             try {
-                Socket clientSocket = new Socket(otherDVMList[clientID-1], otherDVM_IP_Port.get(otherDVMList[clientID-1]));
+                Socket clientSocket = new Socket(otherDVMList[clientID], otherDVM_IP_Port.get(otherDVMList[clientID]));
                 System.out.println("server connected.");
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -140,16 +140,19 @@ public class Network extends Thread {
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
 
                 String line;
-                while ((line = in.readLine()) != null) {
+                line = in.readLine();
+
                     System.out.println("client msg: " + line);
                     message += line;
-                }
+
+                System.out.println("qw");
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             try {
                 JSONObject msg = (JSONObject) jsonParser.parse(message);
+                System.out.println("asdf");
                 if (msg.get("msg_type").equals("req_stock")) {
                     JSONObject msg_content = (JSONObject) msg.get("msg_content");
 
@@ -164,8 +167,10 @@ public class Network extends Thread {
                     responseMsg_content.put("item_num", stock);
                     responseMsg_content.put("coor_x", 30);
                     responseMsg_content.put("coor_y", 30);
+                    responseMsg.put("msg_content", responseMsg_content);
 
                     out.println(responseMsg.toString());
+                    System.out.println(responseMsg);
                 }
                 else {  //req_prepay
                     JSONObject msg_content = (JSONObject) msg.get("msg_content");
@@ -185,7 +190,10 @@ public class Network extends Thread {
                         responseMsg_content.put("availability", "F");
                     }
 
+                    responseMsg.put("msg_content", responseMsg_content);
+
                     out.println(responseMsg.toString());
+                    System.out.println(responseMsg);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -216,9 +224,9 @@ public class Network extends Thread {
 
             try {
                 String line;
-                while ((line = in.readLine()) != null) {
-                    response += line;
-                }
+                line = in.readLine();
+                response +=line;
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
