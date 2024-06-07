@@ -28,17 +28,9 @@ public class VMController {
         DisplayManager displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager, this, prepaymentManager, paymentManager);
         prepaymentManager.init(network, displayManager,paymentManager);
         stockManager.init(paymentManager, this);
-        cardCompany.init(displayManager);
         network.start();
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
 
     public void setItem_list(Map<Integer, Integer> item_list) {
         this.item_list = item_list;

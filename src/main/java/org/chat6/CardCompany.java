@@ -7,7 +7,6 @@ import java.util.*;
 
 public class CardCompany {
     Map<String,Integer> cards = new HashMap<>();  //CardNumber, Balance
-    DisplayManager displayManager;
 
     public CardCompany(){
 
@@ -35,10 +34,6 @@ public class CardCompany {
     }
 
 
-    public void init(DisplayManager displayManager) {
-        this.displayManager = displayManager;
-    }
-
     public boolean requestPayment(String cardNumber, Integer totalPrice) {
         int balance;
         boolean isSuccess = false;
@@ -65,13 +60,11 @@ public class CardCompany {
                         throw new RuntimeException(e);
                     }
                     isSuccess = true;
-                    displayManager.displayPaymentSuccess();
                     return isSuccess;
                 }
                 break;
             }
         }
-        displayManager.displayInsufficientBalance();
         return isSuccess;
     }
 
