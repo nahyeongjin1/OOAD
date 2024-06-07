@@ -29,7 +29,6 @@ public class VMController {
         prepaymentManager.init(network, displayManager,paymentManager);
         stockManager.init(paymentManager, this);
         cardCompany.init(displayManager);
-
         network.start();
     }
 

@@ -32,6 +32,7 @@ public class PrepaymentManager {
 
         JSONObject msg_req_stock_msg_content = new JSONObject();
 
+
         msg_req_stock_msg_content.put("item_code", item_code);
         msg_req_stock_msg_content.put("item_num", item_num);
 
@@ -52,7 +53,7 @@ public class PrepaymentManager {
             generateDVMList(
                     Integer.parseInt(msg_res_stock_msg_content.get("coor_x").toString()),
                     Integer.parseInt(msg_res_stock_msg_content.get("coor_y").toString()),
-                    msg_res_stock.get("dst_id").toString()
+                    msg_res_stock.get("src_id").toString()
             );
         }
     }
@@ -96,7 +97,7 @@ public class PrepaymentManager {
         msg_req_prepayment.put("dst_id", target_id);
         msg_req_prepayment.put("msg_content", msg_req_prepayment_msg_content);
 
-        network.clientStart(target_id.charAt(4)-1, msg_req_prepayment);
+        network.clientStart(Character.getNumericValue(target_id.charAt(4))-1, msg_req_prepayment);
     }
 
     //(client)

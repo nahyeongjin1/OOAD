@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.prefs.Preferences;
 
+import static java.lang.Thread.sleep;
+
 public class DisplayManager extends JFrame {
     JPanel currentPanel;
     AuthenticationCode authenticationCode;
@@ -134,6 +136,7 @@ public class DisplayManager extends JFrame {
             System.out.println(result);
             if (result) {
                 currentPanel.setVisible(false);
+                authenticationCode.deleteCode(input.getText());
                 printMsgAndMainScene("good deal");
             } else {
                 showErrorMessage(errorlabel);
@@ -196,29 +199,31 @@ public class DisplayManager extends JFrame {
         printMsgAndMainScene("insufficient balance");
     }
 
+    List<Item> items = new ArrayList<>();
+
     void showItems() {
         currentPanel = new JPanel();
-        List<Item> items = new ArrayList<>();
-        items.add(new Item(1000, 1 , "콜라"));
-        items.add(new Item(1000, 2 , "사이다"));
-        items.add(new Item(1000, 3 , "녹차"));
-        items.add(new Item(1000, 4 , "홍차"));
-        items.add(new Item(1000, 5 , "밀크티"));
-        items.add(new Item(1000, 6 , "탄산수"));
-        items.add(new Item(1000, 7 , "보리차"));
+
+        items.add(new Item(2000, 1 , "콜라"));
+        items.add(new Item(2000, 2 , "사이다"));
+        items.add(new Item(1500, 3 , "녹차"));
+        items.add(new Item(1500, 4 , "홍차"));
+        items.add(new Item(2000, 5 , "밀크티"));
+        items.add(new Item(1500, 6 , "탄산수"));
+        items.add(new Item(1500, 7 , "보리차"));
         items.add(new Item(1000, 8 , "캔커피"));
         items.add(new Item(1000,9, "물"));
-        items.add(new Item(1000, 10 , "에너지드링크"));
-        items.add(new Item(1000, 11 , "유자차"));
+        items.add(new Item(2500, 10 , "에너지드링크"));
+        items.add(new Item(2000, 11 , "유자차"));
         items.add(new Item(1000, 12 , "식혜"));
-        items.add(new Item(1000, 13 , "아이스티"));
-        items.add(new Item(1000, 14 , "딸기주스"));
-        items.add(new Item(1000, 15 , "오렌지주스"));
-        items.add(new Item(1000, 16 , "포도주스"));
-        items.add(new Item(1000, 17 , "이온음료"));
-        items.add(new Item(1000, 18 , "아메리카노"));
+        items.add(new Item(2500, 13 , "아이스티"));
+        items.add(new Item(3000, 14 , "딸기주스"));
+        items.add(new Item(3000, 15 , "오렌지주스"));
+        items.add(new Item(3000, 16 , "포도주스"));
+        items.add(new Item(2000, 17 , "이온음료"));
+        items.add(new Item(2000, 18 , "아메리카노"));
         items.add(new Item(1000, 19 , "핫초코"));
-        items.add(new Item(1000, 20 , "카페라떼"));
+        items.add(new Item(2500, 20 , "카페라떼"));
 
         getContentPane().removeAll();
         stockManager.printStockList();
@@ -278,6 +283,11 @@ public class DisplayManager extends JFrame {
             } else {
                 prepaymentManager.askStockRequest(userInputItemCode, userInputItemNum);
                 currentPanel.setVisible(false);
+                try {
+                    sleep(1000);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
                 prePaymentUI();
                 //printMsgAndMainScene("fail");
             }
@@ -317,7 +327,6 @@ public class DisplayManager extends JFrame {
 
         inputItemCode.getDocument().addDocumentListener(documentListener);
         inputItemNum.getDocument().addDocumentListener(documentListener);
-
 
     }
 
@@ -366,7 +375,8 @@ public class DisplayManager extends JFrame {
         paymentBtn.addActionListener(e -> {
             currentPanel.setVisible(false);
             prepaymentManager.sendAskPrepaymentMsg(userInputItemCode, userInputItemNum, authenticationCode.generateRandomString());
-            // 결제함수.
+            int itemPrice = items.get(userInputItemCode-1).price * userInputItemNum;
+            paymentManager.startPayment(itemPrice, userInputItemNum);
         });
     }
 
