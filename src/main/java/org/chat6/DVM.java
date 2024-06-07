@@ -15,7 +15,7 @@ public class DVM {
     }
 
     public double getDistance() {
-        double distance = Math.sqrt((2-x) * (2-x) + (2-y) * (2-y));
+        double distance = Math.sqrt((30-x) * (30-x) + (30-y) * (30-y));
         return distance;
     }
 

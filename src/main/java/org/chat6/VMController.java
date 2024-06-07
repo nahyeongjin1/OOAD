@@ -32,13 +32,4 @@ public class VMController {
     }
 
 
-    public void setItem_list(Map<Integer, Integer> item_list) {
-        this.item_list = item_list;
-    }
-
-    public Map<Integer, Integer> getItem_list() {
-        return item_list;
-    }
-
-
 }
