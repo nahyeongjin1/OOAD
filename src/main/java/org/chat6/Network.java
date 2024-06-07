@@ -21,14 +21,14 @@ public class Network extends Thread {
         this.prepaymentManager = prepaymentManager;
 
         otherDVMList[0] = "1";
-        otherDVMList[1] = "13.124.36.229";
+        otherDVMList[1] = "2";
         otherDVMList[2] = "3";
         otherDVMList[3] = "4";
-        otherDVMList[4] = "192.168.67.105";
+        otherDVMList[4] = "5";
         otherDVMList[5] = "6";
-        otherDVMList[6] = "192.168.65.102";
-        otherDVMList[7] = "localhost";
-        otherDVMList[8] = "8";
+        otherDVMList[6] = "7";
+        otherDVMList[7] = "192.168.85.18";
+        otherDVMList[8] = "localhost";
 
 
         otherDVM_IP_Port.put(otherDVMList[0], 0);  //team1's host, port
@@ -160,13 +160,13 @@ public class Network extends Thread {
 
                     JSONObject responseMsg = new JSONObject();
                     responseMsg.put("msg_type", "resp_stock");
-                    responseMsg.put("src_id", "Team8");
+                    responseMsg.put("src_id", "Team9");
                     responseMsg.put("dst_id", msg.get("src_id"));
                     JSONObject responseMsg_content = new JSONObject();
                     responseMsg_content.put("item_code", msg_content.get("item_code"));
                     responseMsg_content.put("item_num", stock);
-                    responseMsg_content.put("coor_x", 1);
-                    responseMsg_content.put("coor_y", 1);
+                    responseMsg_content.put("coor_x", 2);
+                    responseMsg_content.put("coor_y", 2);
                     responseMsg.put("msg_content", responseMsg_content);
 
                     out.println(responseMsg.toString());
@@ -179,7 +179,7 @@ public class Network extends Thread {
 
                     JSONObject responseMsg = new JSONObject();
                     responseMsg.put("msg_type", "resp_prepay");
-                    responseMsg.put("src_id", "Team8");
+                    responseMsg.put("src_id", "Team9");
                     responseMsg.put("dst_id", msg.get("src_id"));
                     JSONObject responseMsg_content = new JSONObject();
                     responseMsg_content.put("item_code", msg_content.get("item_code"));
