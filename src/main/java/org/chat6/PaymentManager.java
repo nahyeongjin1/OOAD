@@ -2,8 +2,8 @@ package org.chat6;
 
 
 public class PaymentManager {
-    CardCompany cardCompany;
-    DisplayManager displayManager;
+    private CardCompany cardCompany;
+    private DisplayManager displayManager;
     private String cardNumber;
 
 

@@ -16,7 +16,8 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.6.1")
 // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
     implementation("com.googlecode.json-simple:json-simple:1.1.1")
-
+    testImplementation("org.mockito:mockito-core:4.3.1")
+    testImplementation("org.mockito:mockito-junit-jupiter:4.3.1")
 }
 
 tasks.test {
