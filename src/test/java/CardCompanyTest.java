@@ -1,4 +1,4 @@
-﻿import org.chat6.*;
+import org.chat6.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,7 +23,7 @@ public class CardCompanyTest {
 
     @Test
     public void testRequestValidCard_Valid() {
-        int result = cardCompany.requestValidCard("12345678");
+        int result = cardCompany.requestValidCard("23232323");
         assertEquals(1, result);
     }
 
