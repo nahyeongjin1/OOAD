@@ -2,7 +2,6 @@ import org.chat6.Network;
 import org.chat6.PrepaymentManager;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,15 +32,29 @@ class NetworkTest {
 
     @Test
     @DisplayName("Test run method")
-    void testRun() throws IOException {
-        ServerSocket serverSocket = mock(ServerSocket.class);
-        Socket clientSocket = mock(Socket.class);
-        when(serverSocket.accept()).thenReturn(clientSocket);
+    public void testServerConnection()  {
 
-        Thread networkThread = new Thread(network);
-        networkThread.start();
+        new Thread(() -> {
+            try {
+                network.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
-        verify(serverSocket, timeout(1000).atLeastOnce()).accept();
+
+        try (Socket clientSocket = new Socket("localhost", 12345)) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @Test

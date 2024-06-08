@@ -7,7 +7,7 @@ public class AuthenticationCode {
     List<Map<String, Object>> list = new ArrayList<>();
 
 
-    boolean validateCode(String authenticationCode){
+    public boolean validateCode(String authenticationCode){
         for(Map<String, Object> element: list){
             System.out.println("코드 :"+element.get("AuthenticationCode"));
             if(element.get("AuthenticationCode").equals(authenticationCode)){
@@ -24,7 +24,7 @@ public class AuthenticationCode {
 
         list.add(map);
     }
-    void deleteCode(String authenticationCode){
+    public void deleteCode(String authenticationCode){
         for(Map<String, Object> element: list){
             System.out.println("AuthenticationCode :"+element.get("AuthenticationCode"));
             if(element.get("AuthenticationCode").equals(authenticationCode)){

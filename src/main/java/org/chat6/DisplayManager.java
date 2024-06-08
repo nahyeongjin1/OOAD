@@ -7,27 +7,24 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.prefs.Preferences;
+
 
 import static java.lang.Thread.sleep;
 
 public class DisplayManager extends JFrame {
-    private JPanel currentPanel;
+    public JPanel currentPanel;
     private AuthenticationCode authenticationCode;
     private CardCompany cardCompany;
     private StockManager stockManager;
     private AdminManager adminManager;
     private PrepaymentManager prepaymentManager;
     private PaymentManager paymentManager;
-    private VMController vmController;
-    private Integer userInputItemCode;
-    private Integer userInputItemNum;
+    public Integer userInputItemCode;
+    public Integer userInputItemNum;
 
-    public DisplayManager(AuthenticationCode authenticationCode, CardCompany cardCompany, StockManager stockManager, AdminManager adminManager, VMController vmController, PrepaymentManager prepaymentManager, PaymentManager paymentManager) {
-        this.vmController = vmController;
+    public DisplayManager(AuthenticationCode authenticationCode, CardCompany cardCompany, StockManager stockManager, AdminManager adminManager, PrepaymentManager prepaymentManager, PaymentManager paymentManager) {
+
         this.authenticationCode = authenticationCode;
         this.cardCompany = cardCompany;
         this.stockManager = stockManager;
