@@ -39,9 +39,7 @@ public class Network extends Thread {
         otherDVM_IP_Port.put(otherDVMList[5], 5);
         otherDVM_IP_Port.put(otherDVMList[6], 12345);
         otherDVM_IP_Port.put(otherDVMList[7], 12345);
-        otherDVM_IP_Port.put(otherDVMList[8], 8);
-
-        int i=0;
+        otherDVM_IP_Port.put(otherDVMList[8], 12345);
 
     }
 
@@ -160,13 +158,13 @@ public class Network extends Thread {
 
                     JSONObject responseMsg = new JSONObject();
                     responseMsg.put("msg_type", "resp_stock");
-                    responseMsg.put("src_id", "Team7");
+                    responseMsg.put("src_id", "Team8");
                     responseMsg.put("dst_id", msg.get("src_id"));
                     JSONObject responseMsg_content = new JSONObject();
                     responseMsg_content.put("item_code", msg_content.get("item_code"));
                     responseMsg_content.put("item_num", stock);
-                    responseMsg_content.put("coor_x", 2);
-                    responseMsg_content.put("coor_y", 2);
+                    responseMsg_content.put("coor_x", 30);
+                    responseMsg_content.put("coor_y", 30);
                     responseMsg.put("msg_content", responseMsg_content);
 
                     out.println(responseMsg.toString());
@@ -179,7 +177,7 @@ public class Network extends Thread {
 
                     JSONObject responseMsg = new JSONObject();
                     responseMsg.put("msg_type", "resp_prepay");
-                    responseMsg.put("src_id", "Team7");
+                    responseMsg.put("src_id", "Team8");
                     responseMsg.put("dst_id", msg.get("src_id"));
                     JSONObject responseMsg_content = new JSONObject();
                     responseMsg_content.put("item_code", msg_content.get("item_code"));
