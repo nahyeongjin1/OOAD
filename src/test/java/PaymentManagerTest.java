@@ -1,4 +1,4 @@
-﻿import org.chat6.*;
+import org.chat6.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

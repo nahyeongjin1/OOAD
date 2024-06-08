@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Test;
 import org.chat6.*;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
