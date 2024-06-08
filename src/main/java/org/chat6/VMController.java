@@ -8,7 +8,6 @@ public class VMController {
     private int x;
     private int y;
 
-    private Map<Integer, Integer> item_list = new HashMap<>();
 
 
     VMController(String dvm_id, int x, int y) {
@@ -25,7 +24,7 @@ public class VMController {
         PrepaymentManager prepaymentManager = new PrepaymentManager(stockManager, authenticationCode);
         PaymentManager paymentManager = new PaymentManager(cardCompany);
         Network network = new Network(prepaymentManager);
-        DisplayManager displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager, this, prepaymentManager, paymentManager);
+        DisplayManager displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager,  prepaymentManager, paymentManager);
         paymentManager.init(displayManager);
         prepaymentManager.init(network, displayManager,paymentManager);
         stockManager.init(paymentManager, this);

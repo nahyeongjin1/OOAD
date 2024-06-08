@@ -60,7 +60,7 @@ public class PrepaymentManager {
         }
     }
 
-    private void generateDVMList(int coor_x, int coor_y, String id) {
+    public void generateDVMList(int coor_x, int coor_y, String id) {
         //sort by distance
 
         DVM dvm = new DVM(id, coor_x, coor_y);
@@ -169,5 +169,9 @@ public class PrepaymentManager {
             return null;
         }
         return "(x : " + dvmList.get(0).getX() + ", y : " + dvmList.get(0).getY() + ")";
+    }
+
+    public List<DVM> getDvmList() {
+        return dvmList;
     }
 }

@@ -7,27 +7,24 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.prefs.Preferences;
+
 
 import static java.lang.Thread.sleep;
 
 public class DisplayManager extends JFrame {
-    JPanel currentPanel;
-    AuthenticationCode authenticationCode;
-    CardCompany cardCompany;
-    StockManager stockManager;
-    AdminManager adminManager;
-    PrepaymentManager prepaymentManager;
-    PaymentManager paymentManager;
-    VMController vmController;
-    private Integer userInputItemCode;
-    private Integer userInputItemNum;
+    public JPanel currentPanel;
+    private AuthenticationCode authenticationCode;
+    private CardCompany cardCompany;
+    private StockManager stockManager;
+    private AdminManager adminManager;
+    private PrepaymentManager prepaymentManager;
+    private PaymentManager paymentManager;
+    public Integer userInputItemCode;
+    public Integer userInputItemNum;
 
-    DisplayManager(AuthenticationCode authenticationCode, CardCompany cardCompany, StockManager stockManager, AdminManager adminManager, VMController vmController, PrepaymentManager prepaymentManager, PaymentManager paymentManager) {
-        this.vmController = vmController;
+    public DisplayManager(AuthenticationCode authenticationCode, CardCompany cardCompany, StockManager stockManager, AdminManager adminManager, PrepaymentManager prepaymentManager, PaymentManager paymentManager) {
+
         this.authenticationCode = authenticationCode;
         this.cardCompany = cardCompany;
         this.stockManager = stockManager;
@@ -43,7 +40,7 @@ public class DisplayManager extends JFrame {
         printMainScene();
     }
 
-    void printMainScene() {
+    public void printMainScene() {
 
         getContentPane().removeAll();
         currentPanel = new JPanel();
@@ -72,7 +69,7 @@ public class DisplayManager extends JFrame {
 
     }
 
-    void clickInputCard() {
+    public void clickInputCard() {
         getContentPane().removeAll();
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
@@ -110,7 +107,7 @@ public class DisplayManager extends JFrame {
 
     }
 
-    void clickInputCode() {
+    public void clickInputCode() {
         getContentPane().removeAll();
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
@@ -147,7 +144,7 @@ public class DisplayManager extends JFrame {
 
     }
 
-    void clickInputAdmin() {
+    public void clickInputAdmin() {
         getContentPane().removeAll();
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
@@ -172,7 +169,7 @@ public class DisplayManager extends JFrame {
         });
     }
 
-    void printMsgAndMainScene(String msg) {
+    public void printMsgAndMainScene(String msg) {
         System.out.println("msg: " + msg);
         getContentPane().removeAll();
         currentPanel = new JPanel();
@@ -192,7 +189,7 @@ public class DisplayManager extends JFrame {
         });
     }
 
-    void showErrorMessage(JLabel j) {
+    public void showErrorMessage(JLabel j) {
         j.setVisible(true);
     }
 
@@ -202,7 +199,7 @@ public class DisplayManager extends JFrame {
         return items.get(itemCode - 1).price;
     }
 
-    void showItems() {
+    public void showItems() {
         currentPanel = new JPanel();
 
         items.add(new Item(2000, 1 , "콜라"));
@@ -335,7 +332,7 @@ public class DisplayManager extends JFrame {
 
     }
 
-    void prePaymentUI() throws InterruptedException {
+    public void prePaymentUI() throws InterruptedException {
         getContentPane().removeAll();
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
@@ -365,9 +362,8 @@ public class DisplayManager extends JFrame {
         });
     }
 
-    void failPayment() {
+    public void failPayment() {
         stockManager.restoreStock(userInputItemCode, userInputItemNum);
         printMsgAndMainScene("payment fail");
     }
 }
-

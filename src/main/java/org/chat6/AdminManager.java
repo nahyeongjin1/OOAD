@@ -6,7 +6,7 @@ public class AdminManager {
 
 
     StockManager stockManager;
-    AdminManager(int id, int pw, StockManager stockManager) {
+    public AdminManager(int id, int pw, StockManager stockManager) {
         this.id = id;
         this.pw = pw;
         this.stockManager = stockManager;

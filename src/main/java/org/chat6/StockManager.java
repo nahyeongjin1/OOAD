@@ -8,8 +8,8 @@ public class StockManager {
 //    private int[] selectedStock;
     private int[] validStocks = {3,7,12,15,16};
 
-    PaymentManager paymentManager;
-    VMController vmController;
+    private PaymentManager paymentManager;
+    private VMController vmController;
   
     public StockManager() {
         stockList = new int[20];

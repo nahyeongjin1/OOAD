@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.*;
 
 public class CardCompany {
-    Map<String,Integer> cards = new HashMap<>();  //CardNumber, Balance
+    private Map<String,Integer> cards = new HashMap<>();  //CardNumber, Balance
 
     public CardCompany(){
 
@@ -69,7 +69,7 @@ public class CardCompany {
     }
 
 
-    int requestValidCard(String card){
+    public int requestValidCard(String card){
         if(cards.containsKey(card))
             return 1;
         else
