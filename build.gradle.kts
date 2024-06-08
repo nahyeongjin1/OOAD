@@ -19,7 +19,8 @@ dependencies {
     implementation ("org.mockito:mockito-junit-jupiter:5.12.0")
 // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
     implementation("com.googlecode.json-simple:json-simple:1.1.1")
-
+    testImplementation("org.mockito:mockito-core:4.3.1")
+    testImplementation("org.mockito:mockito-junit-jupiter:4.3.1")
 }
 
 tasks.test {
