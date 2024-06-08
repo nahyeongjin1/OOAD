@@ -17,7 +17,7 @@ public class Network extends Thread {
 
     PrepaymentManager prepaymentManager;
 
-    Network(PrepaymentManager prepaymentManager) {
+    public Network(PrepaymentManager prepaymentManager) {
         this.prepaymentManager = prepaymentManager;
 
         otherDVMList[0] = "1";
