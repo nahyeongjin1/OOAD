@@ -172,7 +172,7 @@ public class DisplayManager extends JFrame {
         });
     }
 
-    void printMsgAndMainScene(String msg) {
+    public void printMsgAndMainScene(String msg) {
         System.out.println("msg: " + msg);
         getContentPane().removeAll();
         currentPanel = new JPanel();
