@@ -27,43 +27,22 @@ class NetworkTest {
     @InjectMocks
     Network network;
 
-    @Mock
-    ServerSocket serverSocket;
-
-    @Mock
-    Socket clientSocket;
     @BeforeEach
     void setUp() {
         network = new Network(prepaymentManager);
     }
 
-
     @Test
     @DisplayName("Test run method")
-    void testRun() throws IOException, InterruptedException {
-        // Mock the ServerSocket and Socket
+    void testRun() throws IOException {
+        ServerSocket serverSocket = mock(ServerSocket.class);
+        Socket clientSocket = mock(Socket.class);
         when(serverSocket.accept()).thenReturn(clientSocket);
 
-        // Create a thread to run the network
-        Thread networkThread = new Thread(() -> {
-            try {
-                network.run();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-        // Start the network thread
+        Thread networkThread = new Thread(network);
         networkThread.start();
 
-        // Give some time for the thread to start and accept the connection
-        Thread.sleep(1000);
-
-        // Verify that accept() was called on the serverSocket
-        verify(serverSocket, atLeastOnce()).accept();
-
-        // Stop the network thread
-        networkThread.interrupt();
+        verify(serverSocket, timeout(1000).atLeastOnce()).accept();
     }
 
     @Test
