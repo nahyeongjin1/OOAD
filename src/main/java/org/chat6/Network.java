@@ -116,7 +116,7 @@ public class Network extends Thread {
     }
 
     //server -> client
-    static class ClientHandler extends Thread {
+    public static class ClientHandler extends Thread {
         private Socket clientSocket;
         private PrintWriter out;
         private int clientNum;
@@ -143,14 +143,13 @@ public class Network extends Thread {
                     System.out.println("client msg: " + line);
                     message += line;
 
-                System.out.println("qw");
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             try {
                 JSONObject msg = (JSONObject) jsonParser.parse(message);
-                System.out.println("asdf");
+
                 if (msg.get("msg_type").equals("req_stock")) {
                     JSONObject msg_content = (JSONObject) msg.get("msg_content");
 
@@ -201,7 +200,7 @@ public class Network extends Thread {
     }
 
     //client -> server
-    static class ServerResponseThread extends Thread {
+    public static class ServerResponseThread extends Thread {
         private BufferedReader in;
         private PrepaymentManager p;
         private JSONObject request_Msg;

@@ -16,7 +16,7 @@ public class AuthenticationCode {
         }
         return false;
     }
-    void addCode(String authenticationCode, int itemCode, int itemNum){
+    public void addCode(String authenticationCode, int itemCode, int itemNum){
         Map<String, Object> map = new HashMap<>();
         map.put("AuthenticationCode",authenticationCode);
         map.put("ItemCode",itemCode);
