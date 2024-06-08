@@ -20,23 +20,23 @@ public class Network extends Thread {
     Network(PrepaymentManager prepaymentManager) {
         this.prepaymentManager = prepaymentManager;
 
-        otherDVMList[0] = "1";
+        otherDVMList[0] = "192.168.86.38";
         otherDVMList[1] = "2";
         otherDVMList[2] = "3";
         otherDVMList[3] = "4";
         otherDVMList[4] = "5";
         otherDVMList[5] = "6";
-        otherDVMList[6] = "7";
+        otherDVMList[6] = "localhost";
         otherDVMList[7] = "localhost";
-        otherDVMList[8] = "9";
+        otherDVMList[8] = "1";
 
 
         otherDVM_IP_Port.put(otherDVMList[0], 12345);  //team1's host, port
-        otherDVM_IP_Port.put(otherDVMList[1], 12345);  //team2's host, port
-        otherDVM_IP_Port.put(otherDVMList[2], 12345);
-        otherDVM_IP_Port.put(otherDVMList[3], 12345);
-        otherDVM_IP_Port.put(otherDVMList[4], 12345);
-        otherDVM_IP_Port.put(otherDVMList[5], 12345);
+        otherDVM_IP_Port.put(otherDVMList[1], 9001);  //team2's host, port
+        otherDVM_IP_Port.put(otherDVMList[2], 2);
+        otherDVM_IP_Port.put(otherDVMList[3], 3);
+        otherDVM_IP_Port.put(otherDVMList[4], 11120);
+        otherDVM_IP_Port.put(otherDVMList[5], 5);
         otherDVM_IP_Port.put(otherDVMList[6], 12345);
         otherDVM_IP_Port.put(otherDVMList[7], 12345);
         otherDVM_IP_Port.put(otherDVMList[8], 12345);

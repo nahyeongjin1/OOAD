@@ -26,6 +26,7 @@ public class VMController {
         PaymentManager paymentManager = new PaymentManager(cardCompany);
         Network network = new Network(prepaymentManager);
         DisplayManager displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager, this, prepaymentManager, paymentManager);
+        paymentManager.init(displayManager);
         prepaymentManager.init(network, displayManager,paymentManager);
         stockManager.init(paymentManager, this);
         network.start();
