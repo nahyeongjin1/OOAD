@@ -198,6 +198,10 @@ public class DisplayManager extends JFrame {
 
     List<Item> items = new ArrayList<>();
 
+    public int calcPrice(int itemCode) {
+        return items.get(itemCode - 1).price;
+    }
+
     void showItems() {
         currentPanel = new JPanel();
 
@@ -271,7 +275,7 @@ public class DisplayManager extends JFrame {
             if (result) {
                 currentPanel.setVisible(false);
                 stockManager.printStockList();
-                boolean paymentResult = paymentManager.startPayment(items.get(userInputItemCode-1).price, userInputItemNum);
+                boolean paymentResult = paymentManager.startPayment(userInputItemCode, userInputItemNum);
                 if(paymentResult) {
                     printMsgAndMainScene("good deal");
                 } else {
@@ -285,7 +289,11 @@ public class DisplayManager extends JFrame {
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
-                prePaymentUI();
+                try {
+                    prePaymentUI();
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
                 //printMsgAndMainScene("fail");
             }
 
@@ -327,11 +335,12 @@ public class DisplayManager extends JFrame {
 
     }
 
-    void prePaymentUI() {
+    void prePaymentUI() throws InterruptedException {
         getContentPane().removeAll();
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
         String targetDVM_coordinate = prepaymentManager.nearestDVMcoordinate();
+        Thread.sleep(2000);
         if(targetDVM_coordinate == null) {
             printMsgAndMainScene("no DVM");
             return;
