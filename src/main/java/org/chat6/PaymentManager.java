@@ -2,7 +2,8 @@ package org.chat6;
 
 
 public class PaymentManager {
-    CardCompany cardCompany;
+    private CardCompany cardCompany;
+    private DisplayManager displayManager;
     private String cardNumber;
 
 
@@ -11,13 +12,16 @@ public class PaymentManager {
         cardNumber = "";
     }
 
+    public void init(DisplayManager displayManager) {
+        this.displayManager = displayManager;
+    }
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
     }
 
-    public boolean startPayment(int itemPrice, int itemNum) {
+    public boolean startPayment(int itemCode, int itemNum) {
+        int itemPrice = displayManager.calcPrice(itemCode);
         int totalPrice = itemPrice * itemNum;
-        boolean paymentResult = cardCompany.requestPayment(cardNumber, totalPrice);
-        return paymentResult;
+        return cardCompany.requestPayment(cardNumber, totalPrice);
     }
 }

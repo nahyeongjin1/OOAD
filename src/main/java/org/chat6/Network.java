@@ -17,21 +17,21 @@ public class Network extends Thread {
 
     PrepaymentManager prepaymentManager;
 
-    Network(PrepaymentManager prepaymentManager) {
+    public Network(PrepaymentManager prepaymentManager) {
         this.prepaymentManager = prepaymentManager;
 
-        otherDVMList[0] = "1";
+        otherDVMList[0] = "192.168.86.38";
         otherDVMList[1] = "2";
         otherDVMList[2] = "3";
         otherDVMList[3] = "4";
         otherDVMList[4] = "5";
         otherDVMList[5] = "6";
-        otherDVMList[6] = "192.168.85.101";
-        otherDVMList[7] = "8";
-        otherDVMList[8] = "localhost";
+        otherDVMList[6] = "localhost";
+        otherDVMList[7] = "localhost";
+        otherDVMList[8] = "1";
 
 
-        otherDVM_IP_Port.put(otherDVMList[0], 0);  //team1's host, port
+        otherDVM_IP_Port.put(otherDVMList[0], 12345);  //team1's host, port
         otherDVM_IP_Port.put(otherDVMList[1], 9001);  //team2's host, port
         otherDVM_IP_Port.put(otherDVMList[2], 2);
         otherDVM_IP_Port.put(otherDVMList[3], 3);
@@ -39,9 +39,7 @@ public class Network extends Thread {
         otherDVM_IP_Port.put(otherDVMList[5], 5);
         otherDVM_IP_Port.put(otherDVMList[6], 12345);
         otherDVM_IP_Port.put(otherDVMList[7], 12345);
-        otherDVM_IP_Port.put(otherDVMList[8], 8);
-
-        int i=0;
+        otherDVM_IP_Port.put(otherDVMList[8], 12345);
 
     }
 
@@ -118,7 +116,7 @@ public class Network extends Thread {
     }
 
     //server -> client
-    static class ClientHandler extends Thread {
+    public static class ClientHandler extends Thread {
         private Socket clientSocket;
         private PrintWriter out;
         private int clientNum;
@@ -145,14 +143,13 @@ public class Network extends Thread {
                     System.out.println("client msg: " + line);
                     message += line;
 
-                System.out.println("qw");
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             try {
                 JSONObject msg = (JSONObject) jsonParser.parse(message);
-                System.out.println("asdf");
+
                 if (msg.get("msg_type").equals("req_stock")) {
                     JSONObject msg_content = (JSONObject) msg.get("msg_content");
 
@@ -160,13 +157,13 @@ public class Network extends Thread {
 
                     JSONObject responseMsg = new JSONObject();
                     responseMsg.put("msg_type", "resp_stock");
-                    responseMsg.put("src_id", "Team1");
+                    responseMsg.put("src_id", "Team8");
                     responseMsg.put("dst_id", msg.get("src_id"));
                     JSONObject responseMsg_content = new JSONObject();
                     responseMsg_content.put("item_code", msg_content.get("item_code"));
                     responseMsg_content.put("item_num", stock);
-                    responseMsg_content.put("coor_x", 0);
-                    responseMsg_content.put("coor_y", 1);
+                    responseMsg_content.put("coor_x", 30);
+                    responseMsg_content.put("coor_y", 30);
                     responseMsg.put("msg_content", responseMsg_content);
 
                     out.println(responseMsg.toString());
@@ -179,7 +176,7 @@ public class Network extends Thread {
 
                     JSONObject responseMsg = new JSONObject();
                     responseMsg.put("msg_type", "resp_prepay");
-                    responseMsg.put("src_id", "Team1");
+                    responseMsg.put("src_id", "Team8");
                     responseMsg.put("dst_id", msg.get("src_id"));
                     JSONObject responseMsg_content = new JSONObject();
                     responseMsg_content.put("item_code", msg_content.get("item_code"));
@@ -203,7 +200,7 @@ public class Network extends Thread {
     }
 
     //client -> server
-    static class ServerResponseThread extends Thread {
+    public static class ServerResponseThread extends Thread {
         private BufferedReader in;
         private PrepaymentManager p;
         private JSONObject request_Msg;

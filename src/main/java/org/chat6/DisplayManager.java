@@ -15,18 +15,18 @@ import java.util.prefs.Preferences;
 import static java.lang.Thread.sleep;
 
 public class DisplayManager extends JFrame {
-    JPanel currentPanel;
-    AuthenticationCode authenticationCode;
-    CardCompany cardCompany;
-    StockManager stockManager;
-    AdminManager adminManager;
-    PrepaymentManager prepaymentManager;
-    PaymentManager paymentManager;
-    VMController vmController;
+    private JPanel currentPanel;
+    private AuthenticationCode authenticationCode;
+    private CardCompany cardCompany;
+    private StockManager stockManager;
+    private AdminManager adminManager;
+    private PrepaymentManager prepaymentManager;
+    private PaymentManager paymentManager;
+    private VMController vmController;
     private Integer userInputItemCode;
     private Integer userInputItemNum;
 
-    DisplayManager(AuthenticationCode authenticationCode, CardCompany cardCompany, StockManager stockManager, AdminManager adminManager, VMController vmController, PrepaymentManager prepaymentManager, PaymentManager paymentManager) {
+    public DisplayManager(AuthenticationCode authenticationCode, CardCompany cardCompany, StockManager stockManager, AdminManager adminManager, VMController vmController, PrepaymentManager prepaymentManager, PaymentManager paymentManager) {
         this.vmController = vmController;
         this.authenticationCode = authenticationCode;
         this.cardCompany = cardCompany;
@@ -43,7 +43,7 @@ public class DisplayManager extends JFrame {
         printMainScene();
     }
 
-    void printMainScene() {
+    public void printMainScene() {
 
         getContentPane().removeAll();
         currentPanel = new JPanel();
@@ -72,7 +72,7 @@ public class DisplayManager extends JFrame {
 
     }
 
-    void clickInputCard() {
+    public void clickInputCard() {
         getContentPane().removeAll();
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
@@ -110,7 +110,7 @@ public class DisplayManager extends JFrame {
 
     }
 
-    void clickInputCode() {
+    public void clickInputCode() {
         getContentPane().removeAll();
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
@@ -147,7 +147,7 @@ public class DisplayManager extends JFrame {
 
     }
 
-    void clickInputAdmin() {
+    public void clickInputAdmin() {
         getContentPane().removeAll();
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
@@ -172,7 +172,7 @@ public class DisplayManager extends JFrame {
         });
     }
 
-    void printMsgAndMainScene(String msg) {
+    public void printMsgAndMainScene(String msg) {
         System.out.println("msg: " + msg);
         getContentPane().removeAll();
         currentPanel = new JPanel();
@@ -192,13 +192,17 @@ public class DisplayManager extends JFrame {
         });
     }
 
-    void showErrorMessage(JLabel j) {
+    public void showErrorMessage(JLabel j) {
         j.setVisible(true);
     }
 
     List<Item> items = new ArrayList<>();
 
-    void showItems() {
+    public int calcPrice(int itemCode) {
+        return items.get(itemCode - 1).price;
+    }
+
+    public void showItems() {
         currentPanel = new JPanel();
 
         items.add(new Item(2000, 1 , "콜라"));
@@ -271,7 +275,7 @@ public class DisplayManager extends JFrame {
             if (result) {
                 currentPanel.setVisible(false);
                 stockManager.printStockList();
-                boolean paymentResult = paymentManager.startPayment(items.get(userInputItemCode-1).price, userInputItemNum);
+                boolean paymentResult = paymentManager.startPayment(userInputItemCode, userInputItemNum);
                 if(paymentResult) {
                     printMsgAndMainScene("good deal");
                 } else {
@@ -285,7 +289,11 @@ public class DisplayManager extends JFrame {
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
-                prePaymentUI();
+                try {
+                    prePaymentUI();
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
                 //printMsgAndMainScene("fail");
             }
 
@@ -327,11 +335,12 @@ public class DisplayManager extends JFrame {
 
     }
 
-    void prePaymentUI() {
+    public void prePaymentUI() throws InterruptedException {
         getContentPane().removeAll();
         currentPanel = new JPanel();
         JButton homeBtn = new JButton("Home");
         String targetDVM_coordinate = prepaymentManager.nearestDVMcoordinate();
+        Thread.sleep(2000);
         if(targetDVM_coordinate == null) {
             printMsgAndMainScene("no DVM");
             return;
@@ -356,9 +365,8 @@ public class DisplayManager extends JFrame {
         });
     }
 
-    void failPayment() {
+    public void failPayment() {
         stockManager.restoreStock(userInputItemCode, userInputItemNum);
         printMsgAndMainScene("payment fail");
     }
 }
-
