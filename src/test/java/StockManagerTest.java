@@ -1,7 +1,6 @@
 import org.chat6.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,7 +56,7 @@ public class StockManagerTest {
     public void testRechargeStock() {
         stockManager.rechargeStock();
         for (int i : new int[]{3, 7, 12, 15, 16}) {
-            assertEquals(99, stockManager.checkStock(i));
+            assertEquals(99, stockManager.checkStock(i+1));
         }
     }
 

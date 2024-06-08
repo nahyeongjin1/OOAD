@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class DisplayManagerTest {
 
@@ -33,15 +31,13 @@ public class DisplayManagerTest {
     @Mock
     private PaymentManager paymentManager;
 
-    @Mock
-    private VMController vmController;
 
     private DisplayManager displayManager;
 
     @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.openMocks(this);
-        SwingUtilities.invokeAndWait(() -> displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager, vmController, prepaymentManager, paymentManager));
+        SwingUtilities.invokeAndWait(() -> displayManager = new DisplayManager(authenticationCode, cardCompany, stockManager, adminManager, prepaymentManager, paymentManager));
     }
 
     @Test
@@ -91,5 +87,51 @@ public class DisplayManagerTest {
         SwingUtilities.invokeAndWait(() -> displayManager.showItems());
         assertEquals(1, displayManager.getContentPane().getComponentCount());
         assertTrue(displayManager.getContentPane().getComponent(0) instanceof JPanel);
+    }
+
+    @Test
+    public void testFailPayment() {
+        int userInputItemCode = 1;
+        int userInputItemNum = 5;
+        displayManager.userInputItemCode = userInputItemCode;
+        displayManager.userInputItemNum = userInputItemNum;
+        displayManager.failPayment();
+
+        verify(stockManager).restoreStock(userInputItemCode, userInputItemNum);
+
+        JPanel currentPanel = displayManager.currentPanel;
+        assertNotNull(currentPanel);
+
+        JLabel label = (JLabel) currentPanel.getComponent(1);
+        assertEquals("payment fail", label.getText());
+    }
+
+    @Test
+    public void testPrePaymentUI_noDVM() throws InterruptedException {
+        when(prepaymentManager.nearestDVMcoordinate()).thenReturn(null);
+        displayManager.prePaymentUI();
+        verify(prepaymentManager).nearestDVMcoordinate();
+
+        JPanel currentPanel = displayManager.currentPanel;
+        assertNotNull(currentPanel);
+
+        JLabel label = (JLabel) currentPanel.getComponent(1);
+        assertEquals("no DVM", label.getText());
+    }
+
+    @Test
+    public void testPrePaymentUI_yesDVM() throws InterruptedException {
+        when(prepaymentManager.nearestDVMcoordinate()).thenReturn("(x : 1, y : 1)");
+        displayManager.prePaymentUI();
+
+
+        verify(prepaymentManager).nearestDVMcoordinate();
+
+
+        JPanel currentPanel = displayManager.currentPanel;
+        assertNotNull(currentPanel);
+
+        JLabel label = (JLabel) currentPanel.getComponent(1);
+        assertEquals("“Would you like to make a payment for the DVM located at a distance of(x : 1, y : 1)? ", label.getText());
     }
 }

@@ -6,9 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Map;
 
 public class CardCompanyTest {
 
@@ -32,4 +29,22 @@ public class CardCompanyTest {
         int result = cardCompany.requestValidCard("00000000");
         assertEquals(-1, result);
     }
+    @Test
+    public void testRequestPayment_Success() {
+        String cardNumber = "23232323";
+        int totalPrice = 50;
+        boolean result = cardCompany.requestPayment(cardNumber, totalPrice);
+        assertTrue(result);
+    }
+
+    @Test
+    public void testRequestPayment_InsufficientBalance() {
+        String cardNumber = "02050866";
+        int totalPrice = 1000;
+
+        boolean result = cardCompany.requestPayment(cardNumber, totalPrice);
+
+        assertFalse(result);
+    }
+
 }
