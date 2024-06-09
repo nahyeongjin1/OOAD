@@ -14,9 +14,6 @@ public class StockManager {
     public StockManager() {
         stockList = new int[20];
         Arrays.fill(stockList, 0);
-//        selectedStock = new int[20];
-//        System.out.println("stockList: " + stockList.length + " selectedStock: " + selectedStock.length);
-//        Arrays.fill(selectedStock, 0);
     }
 
 
@@ -27,12 +24,6 @@ public class StockManager {
 
     public int checkStock(int itemCode) {
         return stockList[itemCode-1];
-    }
-
-    public void replenishmentStock(int clientNum) {
-        for (int i = 0; i < stockList.length; i++) {
-//            stockList[i] += selectedStock[clientNum][i];
-        }
     }
 
     public void restoreStock(int itemCode, int itemNum) {  //when user cancel the selection
