@@ -38,13 +38,6 @@ public class StockManagerTest {
     }
 
     @Test
-    public void testReplenishmentStock() {
-        stockManager.replenishmentStock(0);
-        // replenishmentStock 메서드는 현재 주석 처리된 부분이 있어 테스트할 내용이 없습니다.
-        // 이후 구현에 따라 테스트를 작성할 수 있습니다.
-    }
-
-    @Test
     public void testRestoreStock() {
         int itemCode = 1;
         int itemNum = 5;
